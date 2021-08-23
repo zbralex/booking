@@ -1,0 +1,19 @@
+<div class="carousel">
+  <div class="carousel__img-wrap" *ngFor="let image of images; let i = index" >
+    <img
+      *ngIf="i === currentSlide"
+      [src]="image.url"
+      class="carousel__img"
+      [@slideAnimation]="'scale'"
+    />
+  </div>
+
+  <div class="carousel__button-wrap">
+    <button mat-icon-button class="prev" class="carousel__button" (click)="prev($event)">
+      <span class="material-icons" >arrow_back_ios_new</span>
+    </button>
+    <button mat-icon-button class="next" class="carousel__button" (click)="next($event)">
+      <span class="material-icons">arrow_forward_ios</span>
+    </button>
+  </div>
+</div>

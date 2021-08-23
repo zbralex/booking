@@ -1,0 +1,28 @@
+<section class="list-rooms">
+  <ul class="list-rooms__wrap" >
+
+    <ng-container *ngFor="let room of rooms" >
+    <li>
+      <article class="list-rooms__item">
+
+        <div class="list-rooms__carousel">
+          <app-carousel [images]="room.images"></app-carousel>
+        </div>
+        <div class="list-rooms__info" (click)="setCoordinates(room.lat, room.long)">
+          <h2>{{room.name}}</h2>
+          <p>
+            <span class="list-rooms__item-title">Адрес</span> {{room.address}}
+          </p>
+
+          <p>
+            <span class="list-rooms__item-title">Цена за ночь</span> {{room.price}} ₽
+          </p>
+          <button mat-raised-button (click)="openDetail(room.id); $event.stopPropagation()" color="accent">Подробнее</button>
+        </div>
+
+      </article>
+    </li>
+    </ng-container>
+  </ul>
+</section>
+

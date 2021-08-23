@@ -1,0 +1,9 @@
+.map-sidebar {
+  &__wrap {
+    background-color: white;
+    height: 85vh;
+    max-height: 1000px;
+    overflow: scroll;
+    max-width: 800px;
+  }
+}

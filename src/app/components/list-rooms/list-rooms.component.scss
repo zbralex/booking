@@ -1,0 +1,40 @@
+.list-rooms {
+
+
+  &__wrap {
+    list-style: none;
+    padding: 15px;
+  }
+
+  &__item {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 4px;
+    min-height: 100px;
+    width: auto;
+    margin: 25px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+
+    &-title {
+      font-weight: bold;
+    }
+  }
+  &__info {
+    flex-basis: 65%;
+    padding: 25px;
+    margin-left: 15px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fbf8ff;
+    }
+  }
+  &__carousel {
+    flex-basis: 35%;
+  }
+}
