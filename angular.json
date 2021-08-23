@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "airbooking": {
+    "booking": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/airbooking",
+            "outputPath": "dist/booking",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "airbooking:build"
+            "browserTarget": "booking:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "airbooking:build:production"
+              "browserTarget": "booking:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "airbooking:build"
+            "browserTarget": "booking:build"
           }
         },
         "test": {
@@ -115,16 +115,20 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "airbooking:serve"
+            "devServerTarget": "booking:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "airbooking:serve:production"
+              "devServerTarget": "booking:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     }
   },
-  "defaultProject": "airbooking"
+  "defaultProject": "booking"
 }
