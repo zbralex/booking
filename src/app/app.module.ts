@@ -17,11 +17,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListRoomsComponent } from './components/list-rooms/list-rooms.component';
 import { RoomDetailComponent } from './components/room-detail/room-detail.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import {AngularYandexMapsModule, YaConfig} from "angular8-yandex-maps";
-import {environment} from "../environments/environment";
+import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps';
+import {environment} from '../environments/environment';
 // import { AgmCoreModule } from "@agm/core";
 const mapConfig: YaConfig = {
-  apikey: environment.apiKey,
+  apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
 };
 
