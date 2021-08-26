@@ -4,17 +4,19 @@ import {EventEmitter, Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class MapSetService {
-  onClick: EventEmitter<any> = new EventEmitter();
+
   passPreparedData: EventEmitter<any> = new EventEmitter();
+  eventAndIndex: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  setCoordinates(coord) {
-    this.onClick.emit(coord);
-  }
+
 
   setPlacemarks(placemarks) {
      this.passPreparedData.emit(placemarks)
-    console.log(placemarks, 'ssa')
+  }
+
+  setActiveBalloon(e, index) {
+    this.eventAndIndex.emit({e, index})
   }
 }

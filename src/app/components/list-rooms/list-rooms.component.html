@@ -1,14 +1,14 @@
 <section class="list-rooms">
   <ul class="list-rooms__wrap" >
 
-    <ng-container *ngFor="let room of rooms" >
+    <ng-container *ngFor="let room of rooms; let i = index" >
     <li>
       <article class="list-rooms__item">
 
         <div class="list-rooms__carousel">
           <app-carousel [images]="room.images"></app-carousel>
         </div>
-        <div class="list-rooms__info" (click)="setCoordinates(room.lat, room.long)">
+        <div class="list-rooms__info"  (mouseenter)="setActiveBalloon($event, i)" (mouseleave)="setActiveBalloon($event, i)">
           <h2>{{room.name}}</h2>
           <p>
             <span class="list-rooms__item-title">Адрес</span> {{room.address}}

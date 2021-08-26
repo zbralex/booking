@@ -1,11 +1,10 @@
 
 <h1>карта</h1>
 <div class="container">
-  <ya-map [center]="center" [zoom]="zoom">
-<!--    <ya-placemark [geometry]="center"></ya-placemark>-->
+  <ya-map [center]="center" [zoom]="zoom" >
 
     <ya-placemark
-      *ngFor="let placemark of placemarks"
+      *ngFor="let placemark of placemarks "
       [geometry]="placemark.geometry"
       [properties]="placemark.properties"
       [options]="placemark.options"

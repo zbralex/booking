@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {RoomsService} from '../../services/rooms.service';
 import {ROOMS} from '../../services/rooms';
-import {MatDialog} from "@angular/material/dialog";
-import {RoomDetailComponent} from "../room-detail/room-detail.component";
-import {MapSetService} from "../../services/map-set.service";
-import {map} from "rxjs/operators";
+import {MatDialog} from '@angular/material/dialog';
+import {RoomDetailComponent} from '../room-detail/room-detail.component';
+import {MapSetService} from '../../services/map-set.service';
 
 @Component({
   selector: 'app-list-rooms',
@@ -21,7 +20,7 @@ export class ListRoomsComponent implements OnInit {
               private matDialog: MatDialog,
               private mapSetService: MapSetService) {
 
-    this.mapSetService.onClick.subscribe(center => this.coords = center)
+
 
   }
 
@@ -29,43 +28,43 @@ export class ListRoomsComponent implements OnInit {
     this.getRooms();
   }
 
-  getRooms() {
+  getRooms(): void {
     this.roomsService.getRooms(ROOMS)
       .subscribe((res: any) => {
         this.rooms.push(res);
       });
     // подготавливаем данные для передачи в placemarks
     this.rooms.forEach((item) => {
-      let newItem = {
+      const newItem = {
         geometry: [item.lat, item.long],
         properties: {
           balloonContentHeader: `<div style="max-width: 250px"><strong>${item.name}</strong><br><span>${item.address}</span></div>`,
-          balloonContentBody: `<img src="${item.images[0].url}" width="250px"/>`
+          balloonContentBody: `<img src="${item.images[0].url}" width="250px" alt="${item.name}"/>`,
+          iconContent: item.price + '₽',
         },
         options: {
-          preset: 'islands#icon',
-          iconColor: '#673ab7'
+          preset: 'islands#darkBlueStretchyIcon',
         }
-      }
-      this.placemarks.push(newItem)
-    })
-    this.mapSetService.setPlacemarks(this.placemarks)
-
+      };
+      this.placemarks.push(newItem);
+    });
+    this.mapSetService.setPlacemarks(this.placemarks);
   }
 
-  openDetail(id) {
+  openDetail(id): void {
     this.matDialog.open(RoomDetailComponent, {
       width: '330px',
       height: '400px',
       data: {
         title: 'Отель id: ' + id
       }
-    })
+    });
   }
 
-  setCoordinates(lat: any, long: any) {
-    let coord = [lat, long]
-    this.mapSetService.setCoordinates(coord);
+
+
+  setActiveBalloon($event, i): void {
+   this.mapSetService.setActiveBalloon($event, i)
   }
 }
 
