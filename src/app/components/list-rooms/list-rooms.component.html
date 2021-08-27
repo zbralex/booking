@@ -17,7 +17,7 @@
           <p>
             <span class="list-rooms__item-title">Цена за ночь</span> {{room.price}} ₽
           </p>
-          <button mat-raised-button (click)="openDetail(room.id); $event.stopPropagation()" color="accent">Подробнее</button>
+          <a mat-raised-button color="accent" [routerLink]="['detail', room.id]">Подробнее</a>
         </div>
 
       </article>

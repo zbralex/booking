@@ -12,14 +12,14 @@ import { MapComponent } from './components/map/map.component';
 import { MapSidebarComponent } from './components/map-sidebar/map-sidebar.component';
 import { MainComponent } from './components/main/main.component';
 import { MatIconRegistry } from '@angular/material/icon';
-import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ListRoomsComponent } from './components/list-rooms/list-rooms.component';
-import { RoomDetailComponent } from './components/room-detail/room-detail.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps';
 import {environment} from '../environments/environment';
-// import { AgmCoreModule } from "@agm/core";
+import { RoomDetailComponent } from './pages/room/room-detail/room-detail.component';
+import { GalleryDetailComponent } from './pages/room/components/gallery-detail/gallery-detail.component';
+import { BookItComponent } from './pages/room/components/book-it/book-it.component';
 const mapConfig: YaConfig = {
   apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
@@ -35,8 +35,10 @@ const mapConfig: YaConfig = {
     MapSidebarComponent,
     MainComponent,
     ListRoomsComponent,
+    CarouselComponent,
     RoomDetailComponent,
-    CarouselComponent
+    GalleryDetailComponent,
+    BookItComponent
   ],
   imports: [
     BrowserModule,

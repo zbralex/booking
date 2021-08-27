@@ -6,7 +6,11 @@ import { MainComponent } from 'src/app/components/main/main.component';
 const routes: Routes = [
   {
     path: '', component: MainComponent
-  }
+  },
+  {
+    path: 'detail/:id', loadChildren: () => import('../../pages/room/room-detail/room-detail.module').then(m => m.RoomDetailModule)
+  },
+
 ]
 
 @NgModule({

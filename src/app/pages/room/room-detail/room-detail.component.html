@@ -1,0 +1,53 @@
+<main class="room-detail">
+
+
+    <header class="room-detail__header">
+        <h1 class="room-detail__header-title">Modern Studio</h1>
+        <div class="room-detail__header-wrap">
+            <div class="room-detail__header-inner room-detail__header-inner--left">
+
+                <div class="room-detail__header-item room-detail__header-item-rating">
+                    <mat-icon class="room-detail__header-item__badge" color="warn" >star</mat-icon>  4.96
+                    <span class="room-detail__header-item-rating__modal" *ngIf="1; else noReviews" (click)="openModalReview($event)" >(84 отзыва)</span>
+                    <ng-template #noReviews>нет отзывов</ng-template>
+                </div>
+
+                <div class="room-detail__header-item room-detail__header-item-owner">
+                    <mat-icon class="room-detail__header-item__badge" color="warn">military_tech</mat-icon> Суперхозяин
+                </div>
+                <div class="room-detail__header-item room-detail__header-item-location">Sankt-Peterburg</div>
+            </div>
+
+            <div class="room-detail__header-inner room-detail__header-inner--right">
+                <div class="room-detail__header-share">
+                    <mat-icon  >ios_share</mat-icon>
+                    share</div>
+                <div class="room-detail__header-favorites">
+                    <mat-icon  >favorite_border</mat-icon>
+                    favorites</div>
+            </div>
+        </div>
+
+    </header>
+
+
+    <section class="room-detail__gallery">
+        <app-gallery-detail></app-gallery-detail>
+    </section>
+
+    <article class="room-detail__overview">
+        <h3>Арендуемое жилье целиком, хозяин: Екатерина</h3>
+        <p>
+            <span>4 гостя, ·</span><span>1 спальня, ·</span>  <span>2 кровати, ·</span> 1 ванная
+        </p>
+        <div class="room-detail__overview-photo">
+            <img src="https://via.placeholder.com/90x90" alt="overview photo">
+        </div>
+    </article>
+    <article class="room-detail__highlights"></article>
+    <p class="room-detail__description">
+        Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
+        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+        Квартира полностью оборудована всем необходимым для проживания не более 4-х
+    </p>
+</main>
