@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {RoomsService} from '../../services/rooms.service';
 import {ROOMS} from '../../services/rooms';
 import {MatDialog} from '@angular/material/dialog';
-import {RoomDetailComponent} from '../room-detail/room-detail.component';
 import {MapSetService} from '../../services/map-set.service';
 
 @Component({
@@ -38,7 +37,9 @@ export class ListRoomsComponent implements OnInit {
       const newItem = {
         geometry: [item.lat, item.long],
         properties: {
-          balloonContentHeader: `<div style="max-width: 250px"><strong>${item.name}</strong><br><span>${item.address}</span></div>`,
+          balloonContentHeader: `<div style="max-width: 250px">
+                                    <a href="./detail/${item.id}" class="map-detail-link">${item.name}</a>
+                                    <br><span class="map-detail-address">${item.address}</span></div>`,
           balloonContentBody: `<img src="${item.images[0].url}" width="250px" alt="${item.name}"/>`,
           iconContent: item.price + '₽',
         },
@@ -50,18 +51,6 @@ export class ListRoomsComponent implements OnInit {
     });
     this.mapSetService.setPlacemarks(this.placemarks);
   }
-
-  openDetail(id): void {
-    this.matDialog.open(RoomDetailComponent, {
-      width: '330px',
-      height: '400px',
-      data: {
-        title: 'Отель id: ' + id
-      }
-    });
-  }
-
-
 
   setActiveBalloon($event, i): void {
    this.mapSetService.setActiveBalloon($event, i)
