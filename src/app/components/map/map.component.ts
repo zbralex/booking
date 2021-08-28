@@ -38,7 +38,14 @@ export class MapComponent implements OnInit {
     }
 
     setColorElement(index, type) {
-        this.placemarks.forEach((item, i) => {
+
+        // в данном случае можно использовать оба метода для прохода по массиву, где-то пишут, что map() быстрее
+        // this.placemarks.forEach((item, i) => {
+        //     if (index === i) {
+        //         item.options = type === 'mouseenter' ? this.options : this.unsetOptions;
+        //     }
+        // });
+        this.placemarks.map((item, i)=> {
             if (index === i) {
                 item.options = type === 'mouseenter' ? this.options : this.unsetOptions;
             }
