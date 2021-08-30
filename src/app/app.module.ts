@@ -67,6 +67,15 @@ export class AppModule {
       'twitter', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/twitter.svg'));
     this.matIconRegistry.addSvgIcon(
       'telegram', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/telegram.svg'));
+
+    this.matIconRegistry.addSvgIcon(
+        'highlights-home', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-home.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-location', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-location.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-medal', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-medal.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-stars', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-stars.svg'));
   }
 }
 

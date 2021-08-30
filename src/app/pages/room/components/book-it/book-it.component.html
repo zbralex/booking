@@ -7,20 +7,23 @@
         <div class="book-it__dates">
             <div class="book-it__dates-arrive-block">
                 <label for="arrive">Прибытие</label>
-                <input type="text" id="arrive" placeholder="Прибытие">
+                <input type="text" id="arrive" placeholder="Укажите дату" readonly>
             </div>
             <div class="book-it__dates-departure-block">
                 <label for="departure">Выезд</label>
-                <input type="text" id="departure" placeholder="Выезд">
+                <input type="text" id="departure" placeholder="Укажите дату" readonly>
             </div>
             <div class="book-it__dates-guests-block">
-                <label for="guests">Гостей</label>
-                <input type="text" id="guests" placeholder="Гостей">
+                <div class="book-it__dates-guests-block-inner">
+                    <label for="guests">Гостей</label>
+                    <input type="text" id="guests" placeholder="Гостей" readonly>
+                </div>
+                <mat-icon> expand_more</mat-icon>
             </div>
         </div>
 
 
 
     </aside>
-    <button class="book-it__button" mat-flat-button color="accent" >Забронировать</button>
+    <button class="book-it__button" mat-flat-button color="primary" >Забронировать</button>
 </aside>

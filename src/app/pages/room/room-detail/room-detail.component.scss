@@ -5,8 +5,8 @@
   &__sticky {
     &-inner-right-block {
       position: sticky;
-      top: 0;
-      flex-basis: 35%;
+      top: 55px;
+      flex-basis: 34%;
     }
     &-inner-left-block {
       flex-basis: 60%;
@@ -15,6 +15,28 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: space-between;
+      padding: 15px;
+    }
+  }
+  &__highlights{
+    padding: 25px 0;
+
+    &-inner {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: flex-start;
+    }
+    &-description {
+      font-weight: 100;
+      color: #717171;
+      &-wrap {
+        width: 100%;
+        margin-left: 15px;
+      }
+    }
+    &-title {
+      font-size: 16px;
+      margin-bottom: 4px;
     }
   }
 
