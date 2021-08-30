@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import {DateRange} from '@angular/material/datepicker';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-room-detail',
@@ -8,10 +10,18 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class RoomDetailComponent implements OnInit {
   images: any;
+  selected: Date | null;
 
-  constructor(private matDialog: MatDialog) { }
+  startDate: Date = new Date();
+  endDate: Date = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
+
+
+
+  constructor(private matDialog: MatDialog) {
+  }
 
   ngOnInit(): void {
+
   }
 
   openModalReview($event) {
@@ -21,4 +31,8 @@ export class RoomDetailComponent implements OnInit {
     showModalFavorites() {
 
     }
+
+  clearDates() {
+    this.selected = null
+  }
 }

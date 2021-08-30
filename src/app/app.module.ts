@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,9 @@ import { GalleryDetailComponent } from './pages/room/components/gallery-detail/g
 import { BookItComponent } from './pages/room/components/book-it/book-it.component';
 import { ReviewComponent } from './pages/room/components/review/review.component';
 import { ReviewDetailComponent } from './pages/room/components/review-detail/review-detail.component';
+import {ReactiveFormsModule} from '@angular/forms';
+
+
 const mapConfig: YaConfig = {
   apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
@@ -50,9 +53,12 @@ const mapConfig: YaConfig = {
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    AngularYandexMapsModule.forRoot(mapConfig)
+    AngularYandexMapsModule.forRoot(mapConfig),
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ru' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
