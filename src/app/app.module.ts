@@ -20,6 +20,8 @@ import {environment} from '../environments/environment';
 import { RoomDetailComponent } from './pages/room/room-detail/room-detail.component';
 import { GalleryDetailComponent } from './pages/room/components/gallery-detail/gallery-detail.component';
 import { BookItComponent } from './pages/room/components/book-it/book-it.component';
+import { ReviewComponent } from './pages/room/components/review/review.component';
+import { ReviewDetailComponent } from './pages/room/components/review-detail/review-detail.component';
 const mapConfig: YaConfig = {
   apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
@@ -38,7 +40,9 @@ const mapConfig: YaConfig = {
     CarouselComponent,
     RoomDetailComponent,
     GalleryDetailComponent,
-    BookItComponent
+    BookItComponent,
+    ReviewComponent,
+    ReviewDetailComponent
   ],
   imports: [
     BrowserModule,

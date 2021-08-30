@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-book-it',
@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-it.component.scss']
 })
 export class BookItComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit(): void {

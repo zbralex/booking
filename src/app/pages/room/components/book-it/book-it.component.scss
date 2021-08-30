@@ -1,0 +1,45 @@
+.book-it {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  height: 500px;
+  box-shadow: 0 0 20px 1px rgb(204 204 204 / 60%);
+  background-color: white;
+
+  &__button {
+    width: 100%;
+  }
+  &__dates {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    &-arrive-block {
+      border: 1px solid #ccc;
+      border-right-style: none;
+      padding: 10px;
+      border-top-left-radius: 4px;
+    }
+    &-departure-block {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-top-right-radius: 4px;
+    }
+    &-guests-block {
+      flex-grow: 1;
+    }
+  }
+
+  &__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    &-price {
+      font-size: 24px;
+    }
+    &-apiece {
+      font-weight: 100;
+    }
+  }
+}

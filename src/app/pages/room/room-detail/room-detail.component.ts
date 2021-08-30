@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./room-detail.component.scss']
 })
 export class RoomDetailComponent implements OnInit {
+  images: any;
 
   constructor(private matDialog: MatDialog) { }
 
@@ -16,4 +17,8 @@ export class RoomDetailComponent implements OnInit {
   openModalReview($event) {
     console.log($event);
   }
+
+    showModalFavorites() {
+
+    }
 }
