@@ -1,0 +1,22 @@
+.custom-calendar {
+  &__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__button--prev {
+    order: 1;
+  }
+
+  &__button--next {
+    order: 2;
+  }
+  &__active-month{
+    order: 2;
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+
+}

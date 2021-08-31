@@ -23,8 +23,13 @@ import { BookItComponent } from './pages/room/components/book-it/book-it.compone
 import { ReviewComponent } from './pages/room/components/review/review.component';
 import { ReviewDetailComponent } from './pages/room/components/review-detail/review-detail.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {DefaultMatCalendarRangeStrategy, MAT_DATE_RANGE_SELECTION_STRATEGY} from '@angular/material/datepicker';
+import { CustomCalendarHeaderComponent } from './pages/room/components/custom-calendar-header/custom-calendar-header.component';
 
+import localeRu from '@angular/common/locales/ru';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localeRu);
 const mapConfig: YaConfig = {
   apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
@@ -45,7 +50,8 @@ const mapConfig: YaConfig = {
     GalleryDetailComponent,
     BookItComponent,
     ReviewComponent,
-    ReviewDetailComponent
+    ReviewDetailComponent,
+    CustomCalendarHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +64,10 @@ const mapConfig: YaConfig = {
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'ru' },
+    {
+      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
+      useClass: DefaultMatCalendarRangeStrategy,
+    },
   ],
   bootstrap: [AppComponent]
 })
