@@ -1,6 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {MatCalendarHeader} from '@angular/material/datepicker';
 import * as moment from 'moment';
+import {MatDatepickerIntl} from '@angular/material/datepicker/datepicker-intl';
+import {DateAdapter, MatDateFormats} from '@angular/material/core';
+import {MatCalendar} from '@angular/material/datepicker/calendar';
 
 @Component({
   selector: 'app-custom-calendar-header',
@@ -9,10 +12,14 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomCalendarHeaderComponent extends MatCalendarHeader<any> implements OnInit{
+
   currentDate: Date = new Date();
   showPrev: boolean;
   showNext: boolean;
-  activeMonth: string;
+  activeMonth: any;
+  leftActiveDate: string
+  rightActiveDate: string;
+
 
   ngOnInit(): void {
     this.showPrevAndNextButton(this.calendar.activeDate)
@@ -26,21 +33,19 @@ export class CustomCalendarHeaderComponent extends MatCalendarHeader<any> implem
   transformCurrentMonth() {
     moment.locale('ru')
     if (this.showPrev) {
-      this.activeMonth = moment(this.activeMonth).format('MMMM');
+      this.leftActiveDate = moment(this.activeMonth).format('MMMM');
     } else {
-      this.activeMonth = moment(this.calendar.activeDate).format('MMMM')
+      this.rightActiveDate = moment(this.calendar.activeDate).format('MMMM')
     }
   }
 
 
   customPrev(): void {
-    console.log(this.calendar.activeDate)
     this.previousClicked()
   }
 
-  /** Handles user clicks on the next button. */
+
   customNext(): void {
-    console.log(this.calendar.activeDate)
     this.nextClicked()
   }
 

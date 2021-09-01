@@ -127,7 +127,7 @@
             </article>
             <article class="room-detail__calendar">
                 <h5 class="room-detail__title">
-                    Selected {{selected}}
+                    Выбранные даты: {{selected?.start | date: 'longDate'}} - {{selected?.end | date: 'longDate'}}
                 </h5>
                 <div class="room-detail__calendar-inner">
                     <div class="room-detail__calendar-block room-detail__calendar-block--left">

@@ -29,7 +29,8 @@
 <!--{{periodButtonText}}-->
 <header class="custom-calendar__header">
 
-    <span class="custom-calendar__active-month">{{activeMonth}}</span>
+    <span class="custom-calendar__active-month" *ngIf="showPrev">{{leftActiveDate}}</span>
+    <span class="custom-calendar__active-month" *ngIf="showNext">{{rightActiveDate}}</span>
 
 
     <button class="custom-calendar__button custom-calendar__button--prev" mat-icon-button *ngIf="showPrev"
