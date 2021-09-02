@@ -28,6 +28,7 @@ import { CustomCalendarHeaderComponent } from './pages/room/components/custom-ca
 
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 registerLocaleData(localeRu);
 const mapConfig: YaConfig = {
@@ -53,15 +54,16 @@ const mapConfig: YaConfig = {
     ReviewDetailComponent,
     CustomCalendarHeaderComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    AngularYandexMapsModule.forRoot(mapConfig),
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        AngularYandexMapsModule.forRoot(mapConfig),
+        ReactiveFormsModule,
+        OverlayModule
+    ],
   providers: [
     { provide: LOCALE_ID, useValue: 'ru' },
     {

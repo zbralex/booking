@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <p class="room-detail__calendar-counter">
-                    <button mat-button class="room-detail__calendar-counter__button" (click)="clearDates()">Очистить
+                    <button mat-button class="room-detail__calendar-counter__button" (click)="clearDates()" [disabled]="!selectedDateRange">Очистить
                         даты
                     </button>
                 </p>
@@ -168,7 +168,7 @@
 
         <div class="room-detail__sticky-inner-right-block">
             <article class="room-detail__book-it">
-                <app-book-it></app-book-it>
+                <app-book-it [dates]="selectedDateRange" ></app-book-it>
             </article>
             <article class="room-detail__book-it__extra-block">
                 <strong>Хотите забронировать другое жилье?</strong>Доступны другие объявления.

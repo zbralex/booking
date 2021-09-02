@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DateRange, MatCalendar} from '@angular/material/datepicker';
 import {CustomCalendarHeaderComponent} from '../components/custom-calendar-header/custom-calendar-header.component';
@@ -12,6 +12,7 @@ import {CustomCalendarHeaderComponent} from '../components/custom-calendar-heade
 export class RoomDetailComponent implements OnInit {
     images: any;
     selected: DateRange<Date>;
+
 
     startDate: Date = new Date();
     endDate: Date = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);

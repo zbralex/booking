@@ -81,4 +81,32 @@
       font-weight: 100;
     }
   }
+  &__guests-block {
+    width: 300px;
+  }
+  &__guests-inner {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  &__guests-babies-wrap {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  &__guests-title {
+    font-weight: 400;
+  }
+  &__guests-note {
+    font-weight: 100;
+    font-size: 12px;
+  }
+  &__buttons-wrap {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+  }
 }
