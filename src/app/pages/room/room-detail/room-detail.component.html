@@ -130,7 +130,7 @@
                     Выбранные даты: {{selected?.start | date: 'longDate'}} - {{selected?.end | date: 'longDate'}}
                 </h5>
                 <div style="display: flex; flex-flow: row nowrap; justify-content: space-around">
-                    <button mat-icon-button (click)="prevMonth()">
+                    <button mat-icon-button (click)="prevMonth()" [disabled]="disabledButtonPrev()">
                         <span class="material-icons-outlined">chevron_left</span>
                     </button>
                     <button  mat-icon-button (click)="nextMonth()" >
@@ -140,7 +140,7 @@
                 <div class="room-detail__calendar-inner">
 
                     <div class="room-detail__calendar-block room-detail__calendar-block--left">
-                        <mat-calendar  [startAt]="startDate" #calendarLeft [headerComponent]="headerComponent"
+                        <mat-calendar  [startAt]="startDate" [minDate]="minDateToChoice"  #calendarLeft [headerComponent]="headerComponent"
                                 (selectedChange)="_onSelectedChange($event)"
                                 [selected]="selectedDateRange">
                         </mat-calendar>
