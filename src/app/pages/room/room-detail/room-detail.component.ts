@@ -78,7 +78,7 @@ export class RoomDetailComponent implements OnInit {
 
     nextMonth() {
         this.disCounter++;
-        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
+        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1);
         this.calendarLeft._goToDateInView(this.startDate, 'month');
         this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1), 'month');
         this.clearDates();
@@ -86,9 +86,12 @@ export class RoomDetailComponent implements OnInit {
 
     prevMonth() {
         this.disCounter--;
-        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() - 1, 1);
-        this.calendarLeft._goToDateInView(this.startDate, 'month');
-        this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() - 1), 'month');
+        this.startDate = new Date(this.startDate.getFullYear(), this.disCounter);
+        this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth() - 1);
+
+
+        this.calendarLeft._goToDateInView(new Date(this.endDate.getFullYear(), this.disCounter), 'month');
+        this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.disCounter + 1), 'month');
         this.clearDates();
     }
 }
