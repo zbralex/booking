@@ -129,16 +129,25 @@
                 <h5 class="room-detail__title">
                     Выбранные даты: {{selected?.start | date: 'longDate'}} - {{selected?.end | date: 'longDate'}}
                 </h5>
+                <div style="display: flex; flex-flow: row nowrap; justify-content: space-around">
+                    <button mat-icon-button (click)="prevMonth()">
+                        <span class="material-icons-outlined">chevron_left</span>
+                    </button>
+                    <button  mat-icon-button (click)="nextMonth()" >
+                        <span class="material-icons-outlined">chevron_right</span>
+                    </button>
+                </div>
                 <div class="room-detail__calendar-inner">
+
                     <div class="room-detail__calendar-block room-detail__calendar-block--left">
-                        <mat-calendar [headerComponent]="calendar" [minDate]="startDate"
+                        <mat-calendar  [startAt]="startDate" #calendarLeft [headerComponent]="headerComponent"
                                 (selectedChange)="_onSelectedChange($event)"
                                 [selected]="selectedDateRange">
                         </mat-calendar>
                     </div>
                     <div class="room-detail__calendar-block room-detail__calendar-block--right">
 
-                        <mat-calendar [startAt]="endDate" [headerComponent]="calendar"
+                        <mat-calendar [startAt]="endDate" #calendarRight [headerComponent]="headerComponent"
                                 (selectedChange)="_onSelectedChange($event)"
                                       [selected]="selectedDateRange"></mat-calendar>
 

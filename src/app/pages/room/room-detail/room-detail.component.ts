@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DateRange} from '@angular/material/datepicker';
+import {DateRange, MatCalendar} from '@angular/material/datepicker';
 import {CustomCalendarHeaderComponent} from '../components/custom-calendar-header/custom-calendar-header.component';
 
 @Component({
@@ -17,17 +17,21 @@ export class RoomDetailComponent implements OnInit {
     endDate: Date = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
 
     selectedDateRange: DateRange<Date>;
-    calendar = CustomCalendarHeaderComponent;
+    @ViewChild('calendarLeft', {static: false}) calendarLeft: MatCalendar<Date>;
+    @ViewChild('calendarRight', {static: false}) calendarRight: MatCalendar<Date>;
+    headerComponent = CustomCalendarHeaderComponent;
 
 
-    constructor(private matDialog: MatDialog) {
+
+
+    constructor(private matDialog: MatDialog, ) {
 
     }
 
 
     ngOnInit(): void {
-        console.log(this.calendar);
     }
+
 
     _onSelectedChange(date: Date): void {
         if (
@@ -59,6 +63,22 @@ export class RoomDetailComponent implements OnInit {
     clearDates() {
         this.selected = null;
         this.selectedDateRange = null;
+    }
+
+    nextMonth() {
+       this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
+        // console.log(this.startDate);
+        this.calendarLeft._goToDateInView(this.startDate, 'month')
+        this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1), "month")
+       this.clearDates()
+    }
+
+    prevMonth() {
+        this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() - 1, 1);
+
+        this.calendarLeft._goToDateInView(this.startDate, 'month')
+        this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() - 1), "month")
+        this.clearDates()
     }
 }
 
