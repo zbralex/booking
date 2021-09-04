@@ -16,7 +16,7 @@
             <div class="book-it__dates-guests-block" (click)="openModalGuests()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
                 <div class="book-it__dates-guests-block-inner">
                     <label for="guests">Гостей</label>
-                    <input type="text" id="guests" placeholder="Гостей" readonly  >
+                    <input type="text" id="guests" placeholder="Гостей" readonly  [value]="totalCountOfGuests">
                 </div>
                 <mat-icon> expand_more</mat-icon>
             </div>
@@ -29,7 +29,7 @@
                     <div class="book-it__guests-inner">
                         <div><span class="book-it__guests-title">Взрослые</span></div>
                         <div class="book-it__buttons-wrap">
-                            <button mat-mini-fab (click)="decreaseCountAdults()" [disabled]="countAdults === 1">-</button>
+                            <button mat-mini-fab (click)="decreaseCountAdults()" [disabled]="countAdults === 1" >-</button>
                             <span>{{countAdults}}</span>
                             <button mat-mini-fab (click)="increaseCountAdults()" [disabled]="countAdults >= 3">+</button>
                         </div>
