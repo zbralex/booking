@@ -16,7 +16,7 @@
             <div class="book-it__dates-guests-block" (click)="openModalGuests()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
                 <div class="book-it__dates-guests-block-inner">
                     <label for="guests">Гостей</label>
-                    <input type="text" id="guests" placeholder="Гостей" readonly  [value]="totalCountOfGuests">
+                    <input type="text" id="guests" placeholder="Гостей" readonly  [(ngModel)]="this.countAdults + this.countBabies + this.countChildren">
                 </div>
                 <mat-icon> expand_more</mat-icon>
             </div>

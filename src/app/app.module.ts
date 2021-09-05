@@ -22,7 +22,7 @@ import { GalleryDetailComponent } from './pages/room/components/gallery-detail/g
 import { BookItComponent } from './pages/room/components/book-it/book-it.component';
 import { ReviewComponent } from './pages/room/components/review/review.component';
 import { ReviewDetailComponent } from './pages/room/components/review-detail/review-detail.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DefaultMatCalendarRangeStrategy, MAT_DATE_RANGE_SELECTION_STRATEGY} from '@angular/material/datepicker';
 import { CustomCalendarHeaderComponent } from './pages/room/components/custom-calendar-header/custom-calendar-header.component';
 
@@ -54,16 +54,17 @@ const mapConfig: YaConfig = {
     ReviewDetailComponent,
     CustomCalendarHeaderComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        SharedModule,
-        AngularYandexMapsModule.forRoot(mapConfig),
-        ReactiveFormsModule,
-        OverlayModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    ReactiveFormsModule,
+    OverlayModule,
+    FormsModule
+  ],
   providers: [
     { provide: LOCALE_ID, useValue: 'ru' },
     {
