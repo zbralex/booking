@@ -39,4 +39,4 @@ jobs:
           GH_TOKEN: ${{ secrets.MAP_API_KEY }}
         run: |
           npm install
-          ng build --prod --base-href=https://zbralex.github.io/booking/
+          ng deploy --base-href=https://zbralex.github.io/booking/
