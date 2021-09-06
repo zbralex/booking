@@ -23,7 +23,6 @@ export class BookItComponent implements OnInit, OnChanges {
 
     @Output()
     overlayOutsideClick: EventEmitter<MouseEvent>;
-    // @Output() selectedDates: EventEmitter<any> = new EventEmitter<any>();
 
     params = {
         adults: 1,
@@ -57,9 +56,7 @@ export class BookItComponent implements OnInit, OnChanges {
         this.setQueryParams();
         this.sumTotalAmount();
         this.getDatesFromUrl()
-        // this.selectedDates.subscribe(res=> {
-        //     console.log(res, 'res');
-        // })
+
     }
 
     sumTotalAmount() {
@@ -70,11 +67,6 @@ export class BookItComponent implements OnInit, OnChanges {
             this.datesParams.start = new Date(this.route.snapshot.queryParams['start'])
             this.datesParams.end = new Date(this.route.snapshot.queryParams['end'])
         }
-        console.log(this.datesParams);
-        // this.selectedDates.next(this.datesParams)
-        // this.selectedDates.subscribe(res=> {
-        //     console.log(res, 'res');
-        // })
     }
     subscribeOnChanges() {
 

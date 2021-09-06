@@ -31,7 +31,7 @@ export class RoomDetailComponent implements OnInit {
     dates: any = {
         start: '',
         end: ''
-    }
+    };
 
     constructor(private matDialog: MatDialog, private route: ActivatedRoute, private router: Router) {
 
@@ -39,28 +39,29 @@ export class RoomDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.getDatesFromUrl()
+        this.getDatesFromUrl();
     }
 
 
     passRange() {
 
-        if (!Object.keys(this.route.snapshot.queryParams).length)  {
-            return
+        if (!Object.keys(this.route.snapshot.queryParams).length) {
+            return;
         }
         this.selectedDateRange = new DateRange((() => {
             let start = this.dates.start;
             start.setDate(start.getDate());
             return start;
         })(), this.dates.end);
-        this.selected = this.dates
+        this.selected = this.dates;
     }
+
     getDatesFromUrl() {
         if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
-            this.dates.start = new Date(this.route.snapshot.queryParams['start'])
-            this.dates.end = new Date(this.route.snapshot.queryParams['end'])
+            this.dates.start = new Date(this.route.snapshot.queryParams['start']);
+            this.dates.end = new Date(this.route.snapshot.queryParams['end']);
         }
-        this.passRange()
+        this.passRange();
     }
 
     disabledButtonPrev() {
@@ -103,10 +104,17 @@ export class RoomDetailComponent implements OnInit {
     }
 
 
-
     clearDates() {
         this.selected = null;
         this.selectedDateRange = null;
+        let queryParams = {...this.route.snapshot.queryParams};
+        delete queryParams['start'];
+        delete queryParams['end'];
+
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams
+        });
     }
 
     nextMonth() {
