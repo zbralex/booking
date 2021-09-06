@@ -12,11 +12,11 @@ export class MapSetService {
 
 
 
-  setPlacemarks(placemarks) {
-     this.passPreparedData.emit(placemarks)
+  setPlacemarks(placemarks): void {
+     this.passPreparedData.emit(placemarks);
   }
 
-  setActiveBalloon(e, index) {
-    this.eventAndIndex.emit({e, index})
+  setActiveBalloon(e, index): void {
+    this.eventAndIndex.emit({e, index});
   }
 }
