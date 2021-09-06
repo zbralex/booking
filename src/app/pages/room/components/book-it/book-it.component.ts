@@ -52,8 +52,6 @@ export class BookItComponent implements OnInit, OnChanges {
 
 
     ngOnInit(): void {
-        console.log(this.route.parent.snapshot.queryParams );
-
         this.subscribeOnChanges();
         this.setQueryParams();
         this.sumTotalAmount();
@@ -106,7 +104,6 @@ export class BookItComponent implements OnInit, OnChanges {
 
     setQueryParams() {
         Object.keys(this.route.snapshot.queryParams).forEach((item) => {
-            console.log(this.route.snapshot.queryParams[item], 'ss');
             this.params[item] = this.route.snapshot.queryParams[item];
             this.amountAdults = +this.route.snapshot.queryParams['adults'];
             this.amountChildren = +this.route.snapshot.queryParams['children'];
