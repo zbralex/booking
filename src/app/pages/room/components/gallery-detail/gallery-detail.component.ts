@@ -6,8 +6,8 @@ import {Component, Input, OnInit} from '@angular/core';
     styleUrls: ['./gallery-detail.component.scss']
 })
 export class GalleryDetailComponent implements OnInit {
-    @Input('images') images: any = [];
-    @Input('minHeight') minHeight: number = 400;
+    @Input() images: any = [];
+    @Input() minHeight = 400;
 
     constructor() {
     }

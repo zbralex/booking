@@ -24,7 +24,7 @@ export class RoomDetailComponent implements OnInit {
     @ViewChild('calendarRight', {static: false}) calendarRight: MatCalendar<Date>;
     headerComponent = CustomCalendarHeaderComponent;
     minDateToChoice: Date = new Date();
-    disabledMinDate: boolean = true;
+    disabledMinDate = true;
 
     disCounter: number = new Date().getMonth();
 
@@ -43,14 +43,14 @@ export class RoomDetailComponent implements OnInit {
     }
 
 
-    passRange() {
+    passRange(): void {
 
         if (!Object.keys(this.route.snapshot.queryParams).length ||
-            !this.route.snapshot.queryParams['start']) {
+            !this.route.snapshot.queryParams.start) {
             return;
         }
         this.selectedDateRange = new DateRange((() => {
-            let start = this.dates.start;
+            const start = this.dates.start;
             start.setDate(start.getDate());
             return start;
         })(), this.dates.end);
@@ -60,15 +60,15 @@ export class RoomDetailComponent implements OnInit {
         this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
     }
 
-    getDatesFromUrl() {
-        if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
-            this.dates.start = new Date(this.route.snapshot.queryParams['start']);
-            this.dates.end = new Date(this.route.snapshot.queryParams['end']);
+    getDatesFromUrl(): void {
+        if (this.route.snapshot.queryParams.start && this.route.snapshot.queryParams.end) {
+            this.dates.start = new Date(this.route.snapshot.queryParams.start);
+            this.dates.end = new Date(this.route.snapshot.queryParams.end);
         }
         this.passRange();
     }
 
-    disabledButtonPrev() {
+    disabledButtonPrev(): boolean {
         if (this.minDateToChoice.getMonth() === this.disCounter) {
             return true;
         }
@@ -98,22 +98,22 @@ export class RoomDetailComponent implements OnInit {
         }
     }
 
-    openModalReview($event) {
+    openModalReview($event): void {
         console.log($event);
     }
 
 
-    showModalFavorites() {
+    showModalFavorites(): void {
 
     }
 
 
-    clearDates() {
+    clearDates(): void {
         this.selected = null;
         this.selectedDateRange = null;
-        let queryParams = {...this.route.snapshot.queryParams};
-        delete queryParams['start'];
-        delete queryParams['end'];
+        const queryParams = {...this.route.snapshot.queryParams};
+        delete queryParams.start;
+        delete queryParams.end;
 
         this.router.navigate([], {
             relativeTo: this.route,
@@ -121,14 +121,14 @@ export class RoomDetailComponent implements OnInit {
         });
     }
 
-    nextMonth() {
+    nextMonth(): void {
         this.disCounter++;
         this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1);
         this.calendarLeft._goToDateInView(this.startDate, 'month');
         this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1), 'month');
     }
 
-    prevMonth() {
+    prevMonth(): void {
         this.disCounter--;
         this.startDate = new Date(this.startDate.getFullYear(), this.disCounter);
         this.endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth() - 1);
