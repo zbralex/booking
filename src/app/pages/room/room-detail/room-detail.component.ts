@@ -44,6 +44,10 @@ export class RoomDetailComponent implements OnInit {
 
 
     passRange() {
+
+        if (!Object.keys(this.route.snapshot.queryParams).length)  {
+            return
+        }
         this.selectedDateRange = new DateRange((() => {
             let start = this.dates.start;
             start.setDate(start.getDate());
