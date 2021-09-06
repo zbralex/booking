@@ -40,4 +40,4 @@ jobs:
         run: |
           npm install
           npm run lint
-          npm run ng -- deploy --base-href=/https://zbralex.github.io/booking/
+          ng build --prod --base-href=https://zbralex.github.io/booking/
