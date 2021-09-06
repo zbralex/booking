@@ -45,7 +45,8 @@ export class RoomDetailComponent implements OnInit {
 
     passRange() {
 
-        if (!Object.keys(this.route.snapshot.queryParams).length) {
+        if (!Object.keys(this.route.snapshot.queryParams).length ||
+            !this.route.snapshot.queryParams['start']) {
             return;
         }
         this.selectedDateRange = new DateRange((() => {
@@ -54,6 +55,9 @@ export class RoomDetailComponent implements OnInit {
             return start;
         })(), this.dates.end);
         this.selected = this.dates;
+
+        this.startDate = this.dates.start;
+        this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 1);
     }
 
     getDatesFromUrl() {
@@ -122,7 +126,6 @@ export class RoomDetailComponent implements OnInit {
         this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1);
         this.calendarLeft._goToDateInView(this.startDate, 'month');
         this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1), 'month');
-        this.clearDates();
     }
 
     prevMonth() {
@@ -133,7 +136,6 @@ export class RoomDetailComponent implements OnInit {
 
         this.calendarLeft._goToDateInView(new Date(this.endDate.getFullYear(), this.disCounter), 'month');
         this.calendarRight._goToDateInView(new Date(this.startDate.getFullYear(), this.disCounter + 1), 'month');
-        this.clearDates();
     }
 }
 
