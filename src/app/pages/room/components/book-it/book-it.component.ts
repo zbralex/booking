@@ -11,15 +11,12 @@ import * as moment from 'moment';
     styleUrls: ['./book-it.component.scss']
 })
 export class BookItComponent implements OnInit, OnChanges {
-    @Input('dates') dates: any = {
-        start: Date,
-        end: Date
-    };
+    @Input() dates: any;
     isOpen: boolean;
     datesParams = {
         start:  new Date(),
         end: new Date()
-    }
+    };
 
     @Output()
     overlayOutsideClick: EventEmitter<MouseEvent>;
@@ -29,8 +26,8 @@ export class BookItComponent implements OnInit, OnChanges {
         children: 0,
         babies: 0
     };
-    paramsDates: any = {}
-    openedDialog: string = 'openedDialog';
+    paramsDates: any = {};
+    openedDialog = 'openedDialog';
     amountAdults: number =  this.params.adults;
     amountChildren: number = this.params.children;
     amountBabies: number = this.params.babies;
@@ -57,10 +54,10 @@ export class BookItComponent implements OnInit, OnChanges {
         this.sumTotalAmount();
     }
 
-    sumTotalAmount() {
+    sumTotalAmount(): void {
         this.totalAmountGuests = this.amountAdults + this.amountChildren + this.amountBabies;
     }
-    subscribeOnChanges() {
+    subscribeOnChanges(): void {
 
         this.subscription = this.setAdults
             .pipe(
@@ -95,74 +92,74 @@ export class BookItComponent implements OnInit, OnChanges {
             ).subscribe();
     }
 
-    passQueryParams(queryParams) {
+    passQueryParams(queryParams): void {
         this.router.navigate([], {
             relativeTo: this.route,
             queryParams
         });
     }
 
-    setQueryParams() {
+    setQueryParams(): void {
         Object.keys(this.route.snapshot.queryParams).forEach((item) => {
             this.params[item] = this.route.snapshot.queryParams[item];
-            this.amountAdults = +this.route.snapshot.queryParams['adults'];
-            this.amountChildren = +this.route.snapshot.queryParams['children'];
-            this.amountBabies = +this.route.snapshot.queryParams['babies'];
+            this.amountAdults = +this.route.snapshot.queryParams.adults;
+            this.amountChildren = +this.route.snapshot.queryParams.children;
+            this.amountBabies = +this.route.snapshot.queryParams.babies;
         });
-        this.passQueryParams(this.params)
+        this.passQueryParams(this.params);
     }
-    prepareDatesForPassToUrl(dates: any) {
+    prepareDatesForPassToUrl(dates: any): void {
         // проверяем значение второго ключа для даты
-        if (dates['end']) {
-            Object.assign(this.paramsDates, {start: moment(dates.start).format('YYYY-MM-DD')})
+        if (dates.end) {
+            Object.assign(this.paramsDates, {start: moment(dates.start).format('YYYY-MM-DD')});
             Object.assign(this.paramsDates, {end: moment(dates.end).format('YYYY-MM-DD')});
 
             // добавляем параметры для даты в сущ-ий массив параметров
-            this.params = {...this.params, ...this.paramsDates}
-            this.passQueryParams(this.params)
+            this.params = {...this.params, ...this.paramsDates};
+            this.passQueryParams(this.params);
         }
     }
 
 
-    openModalGuests() {
+    openModalGuests(): void {
         this.isOpen = !this.isOpen;
     }
 
     // отрефакторить DRY
-    decreaseCountAdults() {
+    decreaseCountAdults(): void {
         this.amountAdults--;
         this.setAdults.next(this.amountAdults);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
-    increaseCountAdults() {
+    increaseCountAdults(): void {
         this.amountAdults++;
         this.setAdults.next(this.amountAdults);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
-    decreaseCountChildren() {
+    decreaseCountChildren(): void {
         this.amountChildren--;
         this.setChildren.next(this.amountChildren);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
-    increaseCountChildren() {
+    increaseCountChildren(): void {
         this.amountChildren++;
         this.setChildren.next(this.amountChildren);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
-    decreaseCountBabies() {
+    decreaseCountBabies(): void {
         this.amountBabies--;
         this.setBabies.next(this.amountBabies);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
-    increaseCountBabies() {
+    increaseCountBabies(): void {
         this.amountBabies++;
         this.setBabies.next(this.amountBabies);
-        this.sumTotalAmount()
+        this.sumTotalAmount();
     }
 
 
@@ -170,7 +167,7 @@ export class BookItComponent implements OnInit, OnChanges {
         // следим за изменениями дат
 
         if (this.dates) {
-            this.prepareDatesForPassToUrl(this.dates)
+            this.prepareDatesForPassToUrl(this.dates);
         }
     }
 

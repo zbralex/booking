@@ -14,11 +14,11 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-    openModalReview($event: MouseEvent) {
+    openModalReview($event: MouseEvent): void {
       this.matDialog.open(ReviewDetailComponent, {
         data: {},
         minHeight: '800px',
         minWidth: '600px'
-      })
+      });
     }
 }
