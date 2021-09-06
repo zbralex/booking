@@ -39,5 +39,4 @@ jobs:
           GH_TOKEN: ${{ secrets.MAP_API_KEY }}
         run: |
           npm install
-          npm run lint
           ng build --prod --base-href=https://zbralex.github.io/booking/
