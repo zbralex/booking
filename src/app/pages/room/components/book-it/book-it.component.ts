@@ -31,7 +31,7 @@ export class BookItComponent implements OnInit, OnChanges {
     };
     paramsDates: any = {}
     openedDialog: string = 'openedDialog';
-    amountAdults: number = this.params.adults;
+    amountAdults: number =  this.params.adults;
     amountChildren: number = this.params.children;
     amountBabies: number = this.params.babies;
 
@@ -52,21 +52,15 @@ export class BookItComponent implements OnInit, OnChanges {
 
 
     ngOnInit(): void {
+        console.log(this.route.parent.snapshot.queryParams );
+
         this.subscribeOnChanges();
         this.setQueryParams();
         this.sumTotalAmount();
-        this.getDatesFromUrl()
-
     }
 
     sumTotalAmount() {
         this.totalAmountGuests = this.amountAdults + this.amountChildren + this.amountBabies;
-    }
-    getDatesFromUrl() {
-        if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
-            this.datesParams.start = new Date(this.route.snapshot.queryParams['start'])
-            this.datesParams.end = new Date(this.route.snapshot.queryParams['end'])
-        }
     }
     subscribeOnChanges() {
 
@@ -112,16 +106,13 @@ export class BookItComponent implements OnInit, OnChanges {
 
     setQueryParams() {
         Object.keys(this.route.snapshot.queryParams).forEach((item) => {
+            console.log(this.route.snapshot.queryParams[item], 'ss');
             this.params[item] = this.route.snapshot.queryParams[item];
-            this.amountChildren = +this.route.snapshot.queryParams['children'];
             this.amountAdults = +this.route.snapshot.queryParams['adults'];
+            this.amountChildren = +this.route.snapshot.queryParams['children'];
             this.amountBabies = +this.route.snapshot.queryParams['babies'];
         });
-        // if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
-        //     this.datesParams.start = new Date(moment().get(this.route.snapshot.queryParams['start']).toString())
-        //     this.datesParams.end = new Date(moment().get(this.route.snapshot.queryParams['end']).toString())
-        // }
-
+        this.passQueryParams(this.params)
     }
     prepareDatesForPassToUrl(dates: any) {
         // проверяем значение второго ключа для даты
