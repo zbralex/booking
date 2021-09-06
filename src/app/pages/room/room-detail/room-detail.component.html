@@ -6,25 +6,34 @@
         <div class="room-detail__header-wrap">
             <div class="room-detail__header-inner room-detail__header-inner--left">
 
-                <div class="room-detail__header-item room-detail__header-item-rating">
-                    <mat-icon class="room-detail__header-item__badge" color="warn" >star</mat-icon>  4.96
-                    <span class="room-detail__header-item-rating__modal" *ngIf="1; else noReviews" (click)="openModalReview($event)" >(84 отзыва)</span>
-                    <ng-template #noReviews>нет отзывов</ng-template>
-                </div>
+                <app-review></app-review>
 
                 <div class="room-detail__header-item room-detail__header-item-owner">
-                    <mat-icon class="room-detail__header-item__badge" color="warn">military_tech</mat-icon> Суперхозяин
+                    <mat-icon class="room-detail__header-item__badge" color="warn">military_tech</mat-icon>
+                    Суперхозяин
                 </div>
                 <div class="room-detail__header-item room-detail__header-item-location">Sankt-Peterburg</div>
             </div>
 
             <div class="room-detail__header-inner room-detail__header-inner--right">
-                <div class="room-detail__header-share">
-                    <mat-icon  >ios_share</mat-icon>
-                    share</div>
-                <div class="room-detail__header-favorites">
-                    <mat-icon  >favorite_border</mat-icon>
-                    favorites</div>
+                <div class="room-detail__header-item room-detail__header-item-share">
+                    <button mat-button>
+                        <mat-icon class="room-detail__header-item__badge room-detail__header-item__badge--share">
+                            ios_share
+                        </mat-icon>
+                        Поделиться
+                    </button>
+                </div>
+                <div class="room-detail__header-item room-detail__header-item-favorites">
+                    <button mat-button (click)="showModalFavorites()">
+                        <mat-icon class="room-detail__header-item__badge room-detail__header-item__badge--favorites">
+                            favorite_border
+                        </mat-icon>
+                        Сохранить
+                    </button>
+                </div>
+
+
             </div>
         </div>
 
@@ -32,22 +41,168 @@
 
 
     <section class="room-detail__gallery">
-        <app-gallery-detail></app-gallery-detail>
+        <app-gallery-detail [images]="images" [minHeight]="600"></app-gallery-detail>
+    </section>
+    <section class="room-detail__sticky-wrap">
+
+        <div class="room-detail__sticky-inner-left-block">
+            <article class="room-detail__overview">
+                <h3 class="room-detail__title">Арендуемое жилье целиком, хозяин: Екатерина</h3>
+                <p>
+                    <span>4 гостя, ·</span><span>1 спальня, ·</span> <span>2 кровати, ·</span> 1 ванная
+                </p>
+                <div class="room-detail__overview-photo">
+                    <img src="https://via.placeholder.com/90x90" alt="overview photo">
+                </div>
+            </article>
+            <mat-divider></mat-divider>
+            <article class="room-detail__highlights">
+                <div class="room-detail__highlights-inner">
+                    <mat-icon svgIcon="highlights-home"></mat-icon>
+                    <div class="room-detail__highlights-description-wrap">
+                        <h4 class="room-detail__highlights-title">Жилье целиком</h4>
+                        <p class="room-detail__highlights-description">Квартира полностью в вашем распоряжении.</p>
+                    </div>
+
+                </div>
+                <div class="room-detail__highlights-inner">
+                    <mat-icon svgIcon="highlights-stars"></mat-icon>
+                    <div class="room-detail__highlights-description-wrap">
+                        <h4 class="room-detail__highlights-title">Расширенная уборка</h4>
+                        <p class="room-detail__highlights-description">Хозяин следует расширенному протоколу уборки.</p>
+                    </div>
+                </div>
+                <div class="room-detail__highlights-inner">
+                    <mat-icon svgIcon="highlights-medal"></mat-icon>
+                    <div class="room-detail__highlights-description-wrap">
+                        <h4 class="room-detail__highlights-title">Екатерина — суперхозяин</h4>
+                        <p class="room-detail__highlights-description">Суперхозяева — опытные хозяева с отличными
+                            отзывами, которые делают всё для комфорта гостей.</p>
+                    </div>
+                </div>
+                <div class="room-detail__highlights-inner">
+                    <mat-icon svgIcon="highlights-location"></mat-icon>
+                    <div class="room-detail__highlights-description-wrap">
+                        <h4 class="room-detail__highlights-title">Отличное расположение</h4>
+                        <p class="room-detail__highlights-description">90% недавних гостей оценили расположение жилья на
+                            пять звезд.</p>
+                    </div>
+                </div>
+            </article>
+            <mat-divider></mat-divider>
+            <p class="room-detail__description">
+                Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
+                Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж
+                студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+                Квартира полностью оборудована всем необходимым для проживания не более 4-х
+            </p>
+            <mat-divider></mat-divider>
+            <article class="room-detail__photos-interior">
+                <h3 class="room-detail__title">Где вы будете спать</h3>
+                <div class="room-detail__photos-interior-image__inner">
+                    <figure class="room-detail__photos-interior-image__wrap">
+                        <img class="room-detail__photos-interior-image__source"
+                             src="https://a0.muscache.com/im/pictures/e7d1e98d-8ad4-4ad9-8deb-64184764a56b.jpg?aki_policy=large"
+                             alt="">
+                        <figcaption class="room-detail__photos-interior-image__caption">
+                            <h5 class="room-detail__photos-interior-image__caption-title">Спальня</h5>
+                            <p class="room-detail__photos-interior-image__caption-description">1 кровать King Size</p>
+                        </figcaption>
+                    </figure>
+                    <figure class="room-detail__photos-interior-image__wrap">
+                        <img class="room-detail__photos-interior-image__source"
+                             src="https://a0.muscache.com/im/pictures/65f3f7cb-65bc-4d4b-95b3-a53795ea3523.jpg?aki_policy=large"
+                             alt="">
+                        <figcaption class="room-detail__photos-interior-image__caption">
+                            <h5 class="room-detail__photos-interior-image__caption-title">Спальня</h5>
+                            <p class="room-detail__photos-interior-image__caption-description">1 кровать King Size</p>
+                        </figcaption>
+                    </figure>
+                </div>
+
+            </article>
+            <mat-divider></mat-divider>
+            <article class="room-detail__amenities">
+                <h5 class="room-detail__title">Какие удобства вас ждут</h5>
+            </article>
+            <article class="room-detail__calendar">
+                <h5 class="room-detail__title">
+                    Выбранные даты: {{selected?.start | date: 'longDate'}} - {{selected?.end | date: 'longDate'}}
+                </h5>
+                <div style="display: flex; flex-flow: row nowrap; justify-content: space-around">
+                    <button mat-icon-button (click)="prevMonth()" [disabled]="disabledButtonPrev()">
+                        <span class="material-icons-outlined">chevron_left</span>
+                    </button>
+                    <button  mat-icon-button (click)="nextMonth()" >
+                        <span class="material-icons-outlined">chevron_right</span>
+                    </button>
+                </div>
+                <div class="room-detail__calendar-inner">
+
+                    <div class="room-detail__calendar-block room-detail__calendar-block--left">
+                        <mat-calendar  [startAt]="startDate" [minDate]="minDateToChoice"  #calendarLeft [headerComponent]="headerComponent"
+                                (selectedChange)="_onSelectedChange($event)"
+                                [selected]="selectedDateRange">
+                        </mat-calendar>
+                    </div>
+                    <div class="room-detail__calendar-block room-detail__calendar-block--right">
+
+                        <mat-calendar [startAt]="endDate" #calendarRight [headerComponent]="headerComponent"
+                                (selectedChange)="_onSelectedChange($event)"
+                                      [selected]="selectedDateRange"></mat-calendar>
+
+                    </div>
+                </div>
+                <p class="room-detail__calendar-counter">
+                    <button mat-button class="room-detail__calendar-counter__button" (click)="clearDates()" [disabled]="!selectedDateRange">Очистить
+                        даты
+                    </button>
+                </p>
+
+
+            </article>
+            <article class="room-detail__amenities">
+                <h5 class="room-detail__title">4.96 · 84 отзыва</h5>
+            </article>
+        </div>
+
+        <div class="room-detail__sticky-inner-right-block">
+            <article class="room-detail__book-it">
+                <app-book-it [dates]="selectedDateRange"></app-book-it>
+            </article>
+            <article class="room-detail__book-it__extra-block">
+                <strong>Хотите забронировать другое жилье?</strong>Доступны другие объявления.
+            </article>
+        </div>
     </section>
 
-    <article class="room-detail__overview">
-        <h3>Арендуемое жилье целиком, хозяин: Екатерина</h3>
-        <p>
-            <span>4 гостя, ·</span><span>1 спальня, ·</span>  <span>2 кровати, ·</span> 1 ванная
-        </p>
-        <div class="room-detail__overview-photo">
-            <img src="https://via.placeholder.com/90x90" alt="overview photo">
-        </div>
-    </article>
-    <article class="room-detail__highlights"></article>
+
     <p class="room-detail__description">
         Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
-        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж
+        студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
         Квартира полностью оборудована всем необходимым для проживания не более 4-х
     </p>
+    <hr>
+    <p class="room-detail__description">
+        Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
+        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж
+        студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+        Квартира полностью оборудована всем необходимым для проживания не более 4-х
+    </p>
+    <hr>
+    <p class="room-detail__description">
+        Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
+        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж
+        студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+        Квартира полностью оборудована всем необходимым для проживания не более 4-х
+    </p>
+    <p class="room-detail__description">
+        Уютная студия в историческом центре города, в 2-х минутах от метро Чкаловская, ожидает дорогих гостей!
+        Квартира расположилась в старинном доходном доме 1903 года постройки с парадным входом с улицы. Метраж
+        студии 28м2. Окна выходят на тихую улицу, что для центра большая редкость.
+        Квартира полностью оборудована всем необходимым для проживания не более 4-х
+    </p>
+
+
 </main>

@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MapSetService} from '../../services/map-set.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -8,7 +9,7 @@ import {MapSetService} from '../../services/map-set.service';
     styleUrls: ['./map.component.scss']
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
     center: any = [55.771209, 37.568156];
     placemarks: PlacemarkConstructor[] = [];
     zoom = 10;
@@ -19,30 +20,28 @@ export class MapComponent implements OnInit {
     unsetOptions: ymaps.IPlacemarkOptions = {
         preset: 'islands#darkBlueStretchyIcon'
     };
+    subscription: Subscription;
 
 
     constructor(private mapSetService: MapSetService) {
     }
 
     ngOnInit(): void {
-        this.mapSetService.passPreparedData
+        // получаем список меток из компонента list-rooms
+        this.subscription = this.mapSetService.passPreparedData
             .subscribe(preparedItems => {
                 this.placemarks = preparedItems;
             });
 
-        this.mapSetService.eventAndIndex.subscribe((res) => {
-            const ind = res.index;
-            this.setColorElement(ind, res.e.type);
+        // меняем цвет метки при наведении
+        this.subscription = this.mapSetService.eventAndIndex.subscribe((res) => {
+            this.placemarks[res.index].options = res.e.type === 'mouseenter' ? this.options : this.unsetOptions;
         });
 
     }
 
-    setColorElement(index, type) {
-        this.placemarks.forEach((item, i) => {
-            if (index === i) {
-                item.options = type === 'mouseenter' ? this.options : this.unsetOptions;
-            }
-        });
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe()
     }
 }
 

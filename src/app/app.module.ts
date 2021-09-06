@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,17 @@ import {environment} from '../environments/environment';
 import { RoomDetailComponent } from './pages/room/room-detail/room-detail.component';
 import { GalleryDetailComponent } from './pages/room/components/gallery-detail/gallery-detail.component';
 import { BookItComponent } from './pages/room/components/book-it/book-it.component';
+import { ReviewComponent } from './pages/room/components/review/review.component';
+import { ReviewDetailComponent } from './pages/room/components/review-detail/review-detail.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DefaultMatCalendarRangeStrategy, MAT_DATE_RANGE_SELECTION_STRATEGY} from '@angular/material/datepicker';
+import { CustomCalendarHeaderComponent } from './pages/room/components/custom-calendar-header/custom-calendar-header.component';
+
+import localeRu from '@angular/common/locales/ru';
+import { registerLocaleData } from '@angular/common';
+import {OverlayModule} from '@angular/cdk/overlay';
+
+registerLocaleData(localeRu);
 const mapConfig: YaConfig = {
   apikey: environment.apiKey + '-7fb3-4447-83b1-41d386d2131d',
   lang: 'ru_RU',
@@ -38,7 +49,10 @@ const mapConfig: YaConfig = {
     CarouselComponent,
     RoomDetailComponent,
     GalleryDetailComponent,
-    BookItComponent
+    BookItComponent,
+    ReviewComponent,
+    ReviewDetailComponent,
+    CustomCalendarHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +60,18 @@ const mapConfig: YaConfig = {
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    AngularYandexMapsModule.forRoot(mapConfig)
+    AngularYandexMapsModule.forRoot(mapConfig),
+    ReactiveFormsModule,
+    OverlayModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ru' },
+    {
+      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
+      useClass: DefaultMatCalendarRangeStrategy,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -63,6 +86,15 @@ export class AppModule {
       'twitter', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/twitter.svg'));
     this.matIconRegistry.addSvgIcon(
       'telegram', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/telegram.svg'));
+
+    this.matIconRegistry.addSvgIcon(
+        'highlights-home', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-home.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-location', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-location.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-medal', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-medal.svg'));
+    this.matIconRegistry.addSvgIcon(
+        'highlights-stars', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/highlights-stars.svg'));
   }
 }
 

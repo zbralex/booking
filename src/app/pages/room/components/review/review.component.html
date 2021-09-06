@@ -1,0 +1,5 @@
+<div class="review__header-item review__header-item-rating">
+    <mat-icon class="review__header-item-badge" color="warn" >star</mat-icon>  4.96
+    <a class="review__header-item-rating-modal" *ngIf="1; else noReviews" (click)="openModalReview($event)" >(84 отзыва)</a>
+    <ng-template #noReviews>нет отзывов</ng-template>
+</div>
