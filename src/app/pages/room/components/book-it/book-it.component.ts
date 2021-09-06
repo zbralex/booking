@@ -1,40 +1,48 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {debounce, debounceTime, tap} from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-book-it',
     templateUrl: './book-it.component.html',
     styleUrls: ['./book-it.component.scss']
 })
-export class BookItComponent implements OnInit {
-    @Input('dates') dates: any;
+export class BookItComponent implements OnInit, OnChanges {
+    @Input('dates') dates: any = {
+        start: Date,
+        end: Date
+    };
     isOpen: boolean;
+    datesParams = {
+        start:  new Date(),
+        end: new Date()
+    }
 
     @Output()
     overlayOutsideClick: EventEmitter<MouseEvent>;
+    // @Output() selectedDates: EventEmitter<any> = new EventEmitter<any>();
 
     params = {
         adults: 1,
         children: 0,
         babies: 0
     };
-    minWidth: number | string = '900px';
+    paramsDates: any = {}
     openedDialog: string = 'openedDialog';
-    countAdults: number = this.params.adults;
-    countChildren: number = this.params.children;
-    countBabies: number = this.params.babies;
+    amountAdults: number = this.params.adults;
+    amountChildren: number = this.params.children;
+    amountBabies: number = this.params.babies;
 
 
     setAdults: Subject<any> = new Subject<any>();
     setChildren: Subject<any> = new Subject<any>();
     setBabies: Subject<any> = new Subject<any>();
     subscription: Subscription;
+    totalAmountGuests: number;
 
-
-    totalCountOfGuests: number;
 
 
     constructor(private matDialog: MatDialog,
@@ -47,9 +55,27 @@ export class BookItComponent implements OnInit {
     ngOnInit(): void {
         this.subscribeOnChanges();
         this.setQueryParams();
+        this.sumTotalAmount();
+        this.getDatesFromUrl()
+        // this.selectedDates.subscribe(res=> {
+        //     console.log(res, 'res');
+        // })
     }
 
-
+    sumTotalAmount() {
+        this.totalAmountGuests = this.amountAdults + this.amountChildren + this.amountBabies;
+    }
+    getDatesFromUrl() {
+        if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
+            this.datesParams.start = new Date(this.route.snapshot.queryParams['start'])
+            this.datesParams.end = new Date(this.route.snapshot.queryParams['end'])
+        }
+        console.log(this.datesParams);
+        // this.selectedDates.next(this.datesParams)
+        // this.selectedDates.subscribe(res=> {
+        //     console.log(res, 'res');
+        // })
+    }
     subscribeOnChanges() {
 
         this.subscription = this.setAdults
@@ -57,8 +83,8 @@ export class BookItComponent implements OnInit {
                 debounceTime(100),
                 tap((item) => {
                     this.params.adults = item;
+                    this.amountAdults = this.params.adults;
                     this.passQueryParams(this.params);
-                    this.countAdults = this.params.adults;
                 }),
             ).subscribe();
 
@@ -68,8 +94,8 @@ export class BookItComponent implements OnInit {
                 tap((item) => {
                     console.log(item);
                     this.params.children = item;
+                    this.amountChildren = this.params.children;
                     this.passQueryParams(this.params);
-                    this.countChildren = this.params.children;
                 }),
             ).subscribe();
 
@@ -79,14 +105,13 @@ export class BookItComponent implements OnInit {
                 tap((item) => {
                     console.log(item);
                     this.params.babies = item;
+                    this.amountBabies = this.params.babies;
                     this.passQueryParams(this.params);
-                    this.countBabies = this.params.babies;
                 }),
             ).subscribe();
     }
 
     passQueryParams(queryParams) {
-
         this.router.navigate([], {
             relativeTo: this.route,
             queryParams
@@ -95,11 +120,27 @@ export class BookItComponent implements OnInit {
 
     setQueryParams() {
         Object.keys(this.route.snapshot.queryParams).forEach((item) => {
-            this.params[item] = +this.route.snapshot.queryParams[item];
-            this.countChildren = +this.route.snapshot.queryParams['children'];
-            this.countAdults = +this.route.snapshot.queryParams['adults'];
-            this.countBabies = +this.route.snapshot.queryParams['babies'];
+            this.params[item] = this.route.snapshot.queryParams[item];
+            this.amountChildren = +this.route.snapshot.queryParams['children'];
+            this.amountAdults = +this.route.snapshot.queryParams['adults'];
+            this.amountBabies = +this.route.snapshot.queryParams['babies'];
         });
+        // if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
+        //     this.datesParams.start = new Date(moment().get(this.route.snapshot.queryParams['start']).toString())
+        //     this.datesParams.end = new Date(moment().get(this.route.snapshot.queryParams['end']).toString())
+        // }
+
+    }
+    prepareDatesForPassToUrl(dates: any) {
+        // проверяем значение второго ключа для даты
+        if (dates['end']) {
+            Object.assign(this.paramsDates, {start: moment(dates.start).format('YYYY-MM-DD')})
+            Object.assign(this.paramsDates, {end: moment(dates.end).format('YYYY-MM-DD')});
+
+            // добавляем параметры для даты в сущ-ий массив параметров
+            this.params = {...this.params, ...this.paramsDates}
+            this.passQueryParams(this.params)
+        }
     }
 
 
@@ -107,34 +148,50 @@ export class BookItComponent implements OnInit {
         this.isOpen = !this.isOpen;
     }
 
-
+    // отрефакторить DRY
     decreaseCountAdults() {
-        this.countAdults--;
-        this.setAdults.next(this.countAdults);
+        this.amountAdults--;
+        this.setAdults.next(this.amountAdults);
+        this.sumTotalAmount()
     }
 
     increaseCountAdults() {
-        this.countAdults++;
-        this.setAdults.next(this.countAdults);
+        this.amountAdults++;
+        this.setAdults.next(this.amountAdults);
+        this.sumTotalAmount()
     }
 
     decreaseCountChildren() {
-        this.countChildren--;
-        this.setChildren.next(this.countChildren);
+        this.amountChildren--;
+        this.setChildren.next(this.amountChildren);
+        this.sumTotalAmount()
     }
 
     increaseCountChildren() {
-        this.countChildren++;
-        this.setChildren.next(this.countChildren);
+        this.amountChildren++;
+        this.setChildren.next(this.amountChildren);
+        this.sumTotalAmount()
     }
 
     decreaseCountBabies() {
-        this.countBabies--;
-        this.setBabies.next(this.countBabies);
+        this.amountBabies--;
+        this.setBabies.next(this.amountBabies);
+        this.sumTotalAmount()
     }
 
     increaseCountBabies() {
-        this.countBabies++;
-        this.setBabies.next(this.countBabies);
+        this.amountBabies++;
+        this.setBabies.next(this.amountBabies);
+        this.sumTotalAmount()
     }
+
+
+    ngOnChanges(changes: SimpleChanges): void {
+        // следим за изменениями дат
+
+        if (this.dates) {
+            this.prepareDatesForPassToUrl(this.dates)
+        }
+    }
+
 }

@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit, Output, ViewChild} from '@an
 import {MatDialog} from '@angular/material/dialog';
 import {DateRange, MatCalendar} from '@angular/material/datepicker';
 import {CustomCalendarHeaderComponent} from '../components/custom-calendar-header/custom-calendar-header.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-room-detail',
@@ -26,13 +28,35 @@ export class RoomDetailComponent implements OnInit {
 
     disCounter: number = new Date().getMonth();
 
+    dates: any = {
+        start: '',
+        end: ''
+    }
 
-    constructor(private matDialog: MatDialog,) {
+    constructor(private matDialog: MatDialog, private route: ActivatedRoute, private router: Router) {
 
     }
 
 
     ngOnInit(): void {
+        this.getDatesFromUrl()
+    }
+
+
+    passRange() {
+        this.selectedDateRange = new DateRange((() => {
+            let start = this.dates.start;
+            start.setDate(start.getDate());
+            return start;
+        })(), this.dates.end);
+        this.selected = this.dates
+    }
+    getDatesFromUrl() {
+        if (this.route.snapshot.queryParams['start'] && this.route.snapshot.queryParams['end']) {
+            this.dates.start = new Date(this.route.snapshot.queryParams['start'])
+            this.dates.end = new Date(this.route.snapshot.queryParams['end'])
+        }
+        this.passRange()
     }
 
     disabledButtonPrev() {
@@ -57,6 +81,7 @@ export class RoomDetailComponent implements OnInit {
                 date
             );
             this.selected = this.selectedDateRange;
+
             console.log(this.selectedDateRange, 'all');
         } else {
             this.selectedDateRange = new DateRange(date, null);
@@ -68,9 +93,12 @@ export class RoomDetailComponent implements OnInit {
         console.log($event);
     }
 
+
     showModalFavorites() {
 
     }
+
+
 
     clearDates() {
         this.selected = null;
