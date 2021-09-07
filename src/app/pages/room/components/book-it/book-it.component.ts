@@ -1,20 +1,21 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Subject, Subscription} from 'rxjs';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Subject} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {debounce, debounceTime, tap} from 'rxjs/operators';
+import {debounceTime, takeUntil, tap} from 'rxjs/operators';
 import * as moment from 'moment';
+
 
 @Component({
     selector: 'app-book-it',
     templateUrl: './book-it.component.html',
     styleUrls: ['./book-it.component.scss']
 })
-export class BookItComponent implements OnInit, OnChanges {
+export class BookItComponent implements OnInit, OnChanges, OnDestroy {
     @Input() dates: any;
     isOpen: boolean;
     datesParams = {
-        start:  new Date(),
+        start: new Date(),
         end: new Date()
     };
 
@@ -28,7 +29,7 @@ export class BookItComponent implements OnInit, OnChanges {
     };
     paramsDates: any = {};
     openedDialog = 'openedDialog';
-    amountAdults: number =  this.params.adults;
+    amountAdults: number = this.params.adults;
     amountChildren: number = this.params.children;
     amountBabies: number = this.params.babies;
 
@@ -36,9 +37,9 @@ export class BookItComponent implements OnInit, OnChanges {
     setAdults: Subject<any> = new Subject<any>();
     setChildren: Subject<any> = new Subject<any>();
     setBabies: Subject<any> = new Subject<any>();
-    subscription: Subscription;
-    totalAmountGuests: number;
 
+    totalAmountGuests: number;
+    protected onDestroy = new Subject<void>();
 
 
     constructor(private matDialog: MatDialog,
@@ -47,7 +48,15 @@ export class BookItComponent implements OnInit, OnChanges {
     ) {
     }
 
+    get cannotDecreaseAdults(): boolean {
+        return this.amountAdults === 1;
+    }
 
+    get cannotIncreaseAdults(): boolean {
+        return this.amountAdults >= 3;
+    }
+
+    // отрефакторить DRY
     ngOnInit(): void {
         this.subscribeOnChanges();
         this.setQueryParams();
@@ -57,9 +66,10 @@ export class BookItComponent implements OnInit, OnChanges {
     sumTotalAmount(): void {
         this.totalAmountGuests = this.amountAdults + this.amountChildren + this.amountBabies;
     }
+
     subscribeOnChanges(): void {
 
-        this.subscription = this.setAdults
+        this.setAdults
             .pipe(
                 debounceTime(100),
                 tap((item) => {
@@ -67,9 +77,10 @@ export class BookItComponent implements OnInit, OnChanges {
                     this.amountAdults = this.params.adults;
                     this.passQueryParams(this.params);
                 }),
+                takeUntil(this.onDestroy)
             ).subscribe();
 
-        this.subscription = this.setChildren
+        this.setChildren
             .pipe(
                 debounceTime(100),
                 tap((item) => {
@@ -78,9 +89,10 @@ export class BookItComponent implements OnInit, OnChanges {
                     this.amountChildren = this.params.children;
                     this.passQueryParams(this.params);
                 }),
+                takeUntil(this.onDestroy)
             ).subscribe();
 
-        this.subscription = this.setBabies
+        this.setBabies
             .pipe(
                 debounceTime(100),
                 tap((item) => {
@@ -89,6 +101,7 @@ export class BookItComponent implements OnInit, OnChanges {
                     this.amountBabies = this.params.babies;
                     this.passQueryParams(this.params);
                 }),
+                takeUntil(this.onDestroy)
             ).subscribe();
     }
 
@@ -108,6 +121,7 @@ export class BookItComponent implements OnInit, OnChanges {
         });
         this.passQueryParams(this.params);
     }
+
     prepareDatesForPassToUrl(dates: any): void {
         // проверяем значение второго ключа для даты
         if (dates.end) {
@@ -120,12 +134,10 @@ export class BookItComponent implements OnInit, OnChanges {
         }
     }
 
-
     openModalGuests(): void {
         this.isOpen = !this.isOpen;
     }
 
-    // отрефакторить DRY
     decreaseCountAdults(): void {
         this.amountAdults--;
         this.setAdults.next(this.amountAdults);
@@ -169,6 +181,11 @@ export class BookItComponent implements OnInit, OnChanges {
         if (this.dates) {
             this.prepareDatesForPassToUrl(this.dates);
         }
+    }
+
+    ngOnDestroy(): void {
+        this.onDestroy.next();
+        this.onDestroy.complete();
     }
 
 }

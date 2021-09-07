@@ -1,37 +1,43 @@
-<aside class="book-it" >
+<aside class="book-it">
     <header class="book-it__header">
-    <h3 class="book-it__header-price">2300 <span class="book-it__header-currency">₽</span><span class="book-it__header-apiece">/ ночь</span> </h3>
+        <h3 class="book-it__header-price">2300 <span class="book-it__header-currency">₽</span><span
+                class="book-it__header-apiece">/ ночь</span></h3>
         <app-review></app-review>
     </header>
     <aside class="book-it__calendar">
         <div class="book-it__dates">
             <div class="book-it__dates-arrive-block">
                 <label for="arrive">Прибытие</label>
-                <input type="text" id="arrive" placeholder="Укажите дату" readonly [value]="dates?.start | date: 'mediumDate'" >
+                <input [value]="dates?.start | date: 'mediumDate'" id="arrive" placeholder="Укажите дату" readonly
+                       type="text">
             </div>
             <div class="book-it__dates-departure-block">
                 <label for="departure">Выезд</label>
-                <input type="text" id="departure" placeholder="Укажите дату" readonly [value]="dates?.end | date: 'mediumDate'">
+                <input [value]="dates?.end | date: 'mediumDate'" id="departure" placeholder="Укажите дату" readonly
+                       type="text">
             </div>
-            <div class="book-it__dates-guests-block" (click)="openModalGuests()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+            <div #trigger="cdkOverlayOrigin" (click)="openModalGuests()" cdkOverlayOrigin
+                 class="book-it__dates-guests-block">
                 <div class="book-it__dates-guests-block-inner">
                     <label for="guests">Гостей</label>
-                    <input type="text" id="guests" placeholder="Гостей" readonly  [value]="totalAmountGuests" >
+                    <input [value]="totalAmountGuests" id="guests" placeholder="Гостей" readonly type="text">
                 </div>
                 <mat-icon> expand_more</mat-icon>
             </div>
 
             <ng-template
-                    cdkConnectedOverlay
+                    [cdkConnectedOverlayOpen]="isOpen"
                     [cdkConnectedOverlayOrigin]="trigger"
-                    [cdkConnectedOverlayOpen]="isOpen">
+                    cdkConnectedOverlay>
                 <mat-card class="book-it__guests-block">
                     <div class="book-it__guests-inner">
                         <div><span class="book-it__guests-title">Взрослые</span></div>
                         <div class="book-it__buttons-wrap">
-                            <button mat-mini-fab (click)="decreaseCountAdults()" [disabled]="amountAdults === 1" >-</button>
+                            <button (click)="decreaseCountAdults()" [disabled]="cannotDecreaseAdults" mat-mini-fab>-
+                            </button>
                             <span>{{amountAdults}}</span>
-                            <button mat-mini-fab (click)="increaseCountAdults()" [disabled]="amountAdults >= 3">+</button>
+                            <button (click)="increaseCountAdults()" [disabled]="cannotIncreaseAdults" mat-mini-fab>+
+                            </button>
                         </div>
                     </div>
                     <mat-divider></mat-divider>
@@ -42,9 +48,11 @@
                         </div>
 
                         <div class="book-it__buttons-wrap">
-                            <button mat-mini-fab (click)="decreaseCountChildren()" [disabled]="amountChildren === 0">-</button>
+                            <button (click)="decreaseCountChildren()" [disabled]="amountChildren === 0" mat-mini-fab>-
+                            </button>
                             <span>{{amountChildren}}</span>
-                            <button mat-mini-fab (click)="increaseCountChildren()" [disabled]="amountChildren >= 2">+</button>
+                            <button (click)="increaseCountChildren()" [disabled]="amountChildren >= 2" mat-mini-fab>+
+                            </button>
                         </div>
                     </div>
                     <mat-divider></mat-divider>
@@ -54,13 +62,15 @@
                             <span class="book-it__guests-note">Младше 2 лет</span>
                         </div>
                         <div class="book-it__buttons-wrap">
-                            <button mat-mini-fab (click)="decreaseCountBabies()" [disabled]="amountBabies === 0">-</button>
+                            <button (click)="decreaseCountBabies()" [disabled]="amountBabies === 0" mat-mini-fab>-
+                            </button>
                             <span>{{amountBabies}}</span>
-                            <button mat-mini-fab (click)="increaseCountBabies()" [disabled]="amountBabies >= 5">+</button>
+                            <button (click)="increaseCountBabies()" [disabled]="amountBabies >= 5" mat-mini-fab>+
+                            </button>
                         </div>
                     </div>
                     <mat-card-actions align="end">
-                        <button mat-button (click)="isOpen = !isOpen">Закрыть</button>
+                        <button (click)="isOpen = !isOpen" mat-button>Закрыть</button>
                     </mat-card-actions>
                 </mat-card>
 
@@ -68,7 +78,6 @@
         </div>
 
 
-
     </aside>
-    <button class="book-it__button" mat-flat-button color="primary" >Забронировать</button>
+    <button class="book-it__button" color="primary" mat-flat-button>Забронировать</button>
 </aside>
