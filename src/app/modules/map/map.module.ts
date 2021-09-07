@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', component: MainComponent
   },
   {
-    path: 'detail/:id', component: RoomDetailComponent
+    path: 'detail/:id', loadChildren: () => import('../../pages/room/room-detail/room-detail.module').then(m => m.RoomDetailModule)
   },
 
 ];
