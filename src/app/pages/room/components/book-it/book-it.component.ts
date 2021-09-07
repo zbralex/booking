@@ -12,12 +12,11 @@ import * as moment from 'moment';
     styleUrls: ['./book-it.component.scss']
 })
 export class BookItComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() dates: any;
-    isOpen: boolean;
-    datesParams = {
-        start: new Date(),
-        end: new Date()
+    @Input() dates: any = {
+        start: null,
+        end: null
     };
+    isOpen: boolean;
 
     @Output()
     overlayOutsideClick: EventEmitter<MouseEvent>;
@@ -188,4 +187,8 @@ export class BookItComponent implements OnInit, OnChanges, OnDestroy {
         this.onDestroy.complete();
     }
 
+    bookIt(): void {
+        const order = {roomId: this.route.snapshot.params.id, ...this.params};
+        console.log(order);
+    }
 }

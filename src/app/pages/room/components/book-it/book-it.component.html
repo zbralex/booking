@@ -79,5 +79,8 @@
 
 
     </aside>
-    <button class="book-it__button" color="primary" mat-flat-button>Забронировать</button>
+    <button (click)="bookIt()" [disabled]="!dates || !dates?.end" class="book-it__button" color="primary"
+            mat-flat-button>
+        Забронировать
+    </button>
 </aside>
