@@ -34,6 +34,19 @@
     }
   }
   &__carousel {
-    flex-basis: 35%;
+    flex-basis: 90%;
   }
 }
+
+@media screen and (max-width: 1440px) {
+  .list-rooms {
+    &__item {
+      flex-flow: row wrap;
+    }
+    &__carousel {
+      flex-basis: 100%;
+      height: 310px;
+    }
+  }
+}
+
