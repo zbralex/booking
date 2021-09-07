@@ -25,7 +25,7 @@
                     </button>
                 </div>
                 <div class="room-detail__header-item room-detail__header-item-favorites">
-                    <button mat-button (click)="showModalFavorites()">
+                    <button (click)="setFavorites()" mat-button>
                         <mat-icon class="room-detail__header-item__badge room-detail__header-item__badge--favorites">
                             favorite_border
                         </mat-icon>
@@ -52,7 +52,7 @@
                     <span>4 гостя, ·</span><span>1 спальня, ·</span> <span>2 кровати, ·</span> 1 ванная
                 </p>
                 <div class="room-detail__overview-photo">
-                    <img src="https://via.placeholder.com/90x90" alt="overview photo">
+                    <img alt="overview photo" src="https://via.placeholder.com/90x90">
                 </div>
             </article>
             <mat-divider></mat-divider>
@@ -101,18 +101,18 @@
                 <h3 class="room-detail__title">Где вы будете спать</h3>
                 <div class="room-detail__photos-interior-image__inner">
                     <figure class="room-detail__photos-interior-image__wrap">
-                        <img class="room-detail__photos-interior-image__source"
-                             src="https://a0.muscache.com/im/pictures/e7d1e98d-8ad4-4ad9-8deb-64184764a56b.jpg?aki_policy=large"
-                             alt="">
+                        <img alt=""
+                             class="room-detail__photos-interior-image__source"
+                             src="https://a0.muscache.com/im/pictures/e7d1e98d-8ad4-4ad9-8deb-64184764a56b.jpg?aki_policy=large">
                         <figcaption class="room-detail__photos-interior-image__caption">
                             <h5 class="room-detail__photos-interior-image__caption-title">Спальня</h5>
                             <p class="room-detail__photos-interior-image__caption-description">1 кровать King Size</p>
                         </figcaption>
                     </figure>
                     <figure class="room-detail__photos-interior-image__wrap">
-                        <img class="room-detail__photos-interior-image__source"
-                             src="https://a0.muscache.com/im/pictures/65f3f7cb-65bc-4d4b-95b3-a53795ea3523.jpg?aki_policy=large"
-                             alt="">
+                        <img alt=""
+                             class="room-detail__photos-interior-image__source"
+                             src="https://a0.muscache.com/im/pictures/65f3f7cb-65bc-4d4b-95b3-a53795ea3523.jpg?aki_policy=large">
                         <figcaption class="room-detail__photos-interior-image__caption">
                             <h5 class="room-detail__photos-interior-image__caption-title">Спальня</h5>
                             <p class="room-detail__photos-interior-image__caption-description">1 кровать King Size</p>
@@ -130,31 +130,33 @@
                     Выбранные даты: {{selected?.start | date: 'longDate'}} - {{selected?.end | date: 'longDate'}}
                 </h5>
                 <div style="display: flex; flex-flow: row nowrap; justify-content: space-around">
-                    <button mat-icon-button (click)="prevMonth()" [disabled]="disabledButtonPrev()">
+                    <button (click)="prevMonth()" [disabled]="disabledButtonPrev()" mat-icon-button>
                         <span class="material-icons-outlined">chevron_left</span>
                     </button>
-                    <button  mat-icon-button (click)="nextMonth()" >
+                    <button (click)="nextMonth()" mat-icon-button>
                         <span class="material-icons-outlined">chevron_right</span>
                     </button>
                 </div>
                 <div class="room-detail__calendar-inner">
 
                     <div class="room-detail__calendar-block room-detail__calendar-block--left">
-                        <mat-calendar  [startAt]="startDate" [minDate]="minDateToChoice"  #calendarLeft [headerComponent]="headerComponent"
-                                (selectedChange)="_onSelectedChange($event)"
-                                [selected]="selectedDateRange">
+                        <mat-calendar #calendarLeft (selectedChange)="_onSelectedChange($event)" [headerComponent]="headerComponent"
+                                      [minDate]="minDateToChoice"
+                                      [selected]="selectedDateRange"
+                                      [startAt]="startDate">
                         </mat-calendar>
                     </div>
                     <div class="room-detail__calendar-block room-detail__calendar-block--right">
 
-                        <mat-calendar [startAt]="endDate" #calendarRight [headerComponent]="headerComponent"
-                                (selectedChange)="_onSelectedChange($event)"
-                                      [selected]="selectedDateRange"></mat-calendar>
+                        <mat-calendar #calendarRight (selectedChange)="_onSelectedChange($event)" [headerComponent]="headerComponent"
+                                      [selected]="selectedDateRange"
+                                      [startAt]="endDate"></mat-calendar>
 
                     </div>
                 </div>
                 <p class="room-detail__calendar-counter">
-                    <button mat-button class="room-detail__calendar-counter__button" (click)="clearDates()" [disabled]="!selectedDateRange">Очистить
+                    <button (click)="clearDates()" [disabled]="!selectedDateRange" class="room-detail__calendar-counter__button"
+                            mat-button>Очистить
                         даты
                     </button>
                 </p>

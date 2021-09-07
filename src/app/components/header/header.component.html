@@ -1,9 +1,14 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a routerLink="/" class="header__logo-link">Booking on Material</a><br>
-    <span> (нет мобильной версии)</span>
-    <span class="spacer"></span>
-    <mat-icon class="icon" aria-hidden="false" >favorite</mat-icon>
-    <mat-icon class="icon" aria-hidden="false" >delete</mat-icon>
-  </mat-toolbar-row>
+    <mat-toolbar-row>
+        <a class="header__logo-link" routerLink="/">Booking on Material</a><br>
+        <span> (нет мобильной версии)</span>
+        <span class="spacer"></span>
+        <button (click)="showOrders()" mat-icon-button>
+            <span class="material-icons-outlined">shopping_basket</span>
+        </button>
+        <button (click)="showFavorites()" mat-icon-button>
+            <span class="material-icons-outlined">favorite_border</span>
+        </button>
+
+    </mat-toolbar-row>
 </mat-toolbar>

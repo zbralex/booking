@@ -189,6 +189,6 @@ export class BookItComponent implements OnInit, OnChanges, OnDestroy {
 
     bookIt(): void {
         const order = {roomId: this.route.snapshot.params.id, ...this.params};
-        console.log(order);
+        localStorage.setItem('order', JSON.stringify(order));
     }
 }

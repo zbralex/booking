@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DateRange, MatCalendar} from '@angular/material/datepicker';
 import {CustomCalendarHeaderComponent} from '../components/custom-calendar-header/custom-calendar-header.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as moment from 'moment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-room-detail',
@@ -33,15 +33,16 @@ export class RoomDetailComponent implements OnInit {
         end: ''
     };
 
-    constructor(private matDialog: MatDialog, private route: ActivatedRoute, private router: Router) {
+    constructor(private matDialog: MatDialog,
+                private route: ActivatedRoute,
+                private router: Router,
+                private snackBar: MatSnackBar) {
 
     }
-
 
     ngOnInit(): void {
         this.getDatesFromUrl();
     }
-
 
     passRange(): void {
 
@@ -77,7 +78,6 @@ export class RoomDetailComponent implements OnInit {
         }
     }
 
-
     _onSelectedChange(date: Date): void {
         if (
             this.selectedDateRange &&
@@ -102,11 +102,27 @@ export class RoomDetailComponent implements OnInit {
         console.log($event);
     }
 
+    setFavorites(): void {
+        const favorites = localStorage.getItem('favorites');
 
-    showModalFavorites(): void {
-
+        if (!favorites) {
+            localStorage.setItem('favorites', JSON.stringify([{id: +this.route.snapshot.params.id}]));
+        } else {
+            const arrayFavorites = JSON.parse(favorites);
+            const findAdded = arrayFavorites.find((item) => item.id === +this.route.snapshot.params.id);
+            console.log(findAdded);
+            if (findAdded) {
+                this.snackBar.open('Это предложение уже добавлено в избранное', '', {
+                        duration: 3000,
+                    }
+                );
+            } else {
+                // добавляем
+                arrayFavorites.push({id: +this.route.snapshot.params.id});
+                localStorage.setItem('favorites', JSON.stringify(arrayFavorites));
+            }
+        }
     }
-
 
     clearDates(): void {
         this.selected = null;
