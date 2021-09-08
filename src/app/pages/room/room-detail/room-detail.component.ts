@@ -40,6 +40,19 @@ export class RoomDetailComponent implements OnInit {
 
     }
 
+    get disableButtonFavorites(): boolean {
+        const favorites = localStorage.getItem('favorites');
+        if (!favorites) {
+            return false;
+        } else {
+            const arrayFavorites = JSON.parse(favorites);
+            const findAdded = arrayFavorites.find((item) => item.id === +this.route.snapshot.params.id);
+            if (findAdded) {
+                return true;
+            }
+        }
+    }
+
     ngOnInit(): void {
         this.getDatesFromUrl();
     }
