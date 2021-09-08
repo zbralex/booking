@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RoomsService} from '../../services/rooms.service';
 import {ROOMS} from '../../services/rooms';
 import {Observable, of} from 'rxjs';
+import {FavoritesService} from '../../services/favorites.service';
 
 @Component({
     selector: 'app-header',
@@ -10,12 +11,12 @@ import {Observable, of} from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     isOpen = false;
-    favorites: any = [];
-    preparedFavorites: any = [];
-    allItems: any = [];
-    favorites$: Observable<any>;
+    preparedFavorites: any = []; // массив подготовленных данных
+    allItems: any = []; // список из всех предложений (отели и дома)
+    favorites: any = []; // список избранного из Localstorage
+    favorites$: Observable<any>; // поток для элементов избранного, который отслеживает изменения удаленных элем-ов
 
-    constructor(private roomsService: RoomsService) {
+    constructor(private roomsService: RoomsService, private favoritesService: FavoritesService) {
     }
 
 
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
         this.getRooms();
         this.getFavorites();
         this.favorites$ = this.getDataFromObservable(this.favorites);
+        this.subscribeOnChangesFavorites();
     }
 
     showOrders(): void {
@@ -77,5 +79,23 @@ export class HeaderComponent implements OnInit {
             });
         });
         localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    }
+
+    subscribeOnChangesFavorites(): void {
+        this.favoritesService.evEmit.subscribe((res) => {
+            this.favorites.push(res);
+            this.favorites$ = new Observable<any>(obs => {
+                obs.next(this.favorites);
+            });
+
+            this.preparedFavorites = [];
+            this.allItems.map((item) => {
+                this.favorites.map((el) => {
+                    if (item.id === el.id) {
+                        this.preparedFavorites.push(item);
+                    }
+                });
+            });
+        });
     }
 }

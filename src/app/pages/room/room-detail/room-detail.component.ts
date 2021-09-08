@@ -4,6 +4,8 @@ import {DateRange, MatCalendar} from '@angular/material/datepicker';
 import {CustomCalendarHeaderComponent} from '../components/custom-calendar-header/custom-calendar-header.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subject} from 'rxjs';
+import {FavoritesService} from '../../../services/favorites.service';
 
 @Component({
     selector: 'app-room-detail',
@@ -25,6 +27,7 @@ export class RoomDetailComponent implements OnInit {
     headerComponent = CustomCalendarHeaderComponent;
     minDateToChoice: Date = new Date();
     disabledMinDate = true;
+    setFavoriteSubj: Subject<any> = new Subject<any>();
 
     disCounter: number = new Date().getMonth();
 
@@ -36,7 +39,8 @@ export class RoomDetailComponent implements OnInit {
     constructor(private matDialog: MatDialog,
                 private route: ActivatedRoute,
                 private router: Router,
-                private snackBar: MatSnackBar) {
+                private snackBar: MatSnackBar,
+                private favoritesService: FavoritesService) {
 
     }
 
@@ -55,6 +59,10 @@ export class RoomDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.getDatesFromUrl();
+
+        this.setFavoriteSubj.subscribe((res) => {
+            this.favoritesService.setFavorite(res);
+        });
     }
 
     passRange(): void {
@@ -123,7 +131,7 @@ export class RoomDetailComponent implements OnInit {
         } else {
             const arrayFavorites = JSON.parse(favorites);
             const findAdded = arrayFavorites.find((item) => item.id === +this.route.snapshot.params.id);
-            console.log(findAdded);
+
             if (findAdded) {
                 this.snackBar.open('Это предложение уже добавлено в избранное', '', {
                         duration: 3000,
@@ -133,6 +141,8 @@ export class RoomDetailComponent implements OnInit {
                 // добавляем
                 arrayFavorites.push({id: +this.route.snapshot.params.id});
                 localStorage.setItem('favorites', JSON.stringify(arrayFavorites));
+
+                this.setFavoriteSubj.next({id: +this.route.snapshot.params.id});
             }
         }
     }
