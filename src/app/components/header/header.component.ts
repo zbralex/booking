@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
     favorites: any = [];
     preparedFavorites: any = [];
     allItems: any = [];
-    preparedFavorites$: Observable<any>;
+    favorites$: Observable<any>;
 
     constructor(private roomsService: RoomsService) {
     }
@@ -22,14 +22,14 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
         this.getRooms();
         this.getFavorites();
-        this.preparedFavorites$ = this.d(this.favorites);
+        this.favorites$ = this.getDataFromObservable(this.favorites);
     }
 
     showOrders(): void {
         console.log('order');
     }
 
-    d(data: any): Observable<any> {
+    getDataFromObservable(data: any): Observable<any> {
         return of(data);
     }
 
@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit {
                 return item.id !== id;
             }
         );
-        this.preparedFavorites$ = new Observable<any>(obs => {
+        this.favorites$ = new Observable<any>(obs => {
             obs.next(this.favorites);
         });
         this.preparedFavorites = [];

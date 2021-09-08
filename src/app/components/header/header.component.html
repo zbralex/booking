@@ -37,7 +37,11 @@
 
             </mat-list-item>
         </mat-list>
-        <mat-divider></mat-divider>
+        <ng-container *ngIf="preparedFavorites.length < 1">
+            <div class="favorites__empty">
+                <span>Список избранного пуст 💔</span>
+            </div>
+        </ng-container>
 
     </div>
 
