@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RoomsService} from '../../services/rooms.service';
 import {ROOMS} from '../../services/rooms';
+import {Observable, of} from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -9,19 +10,27 @@ import {ROOMS} from '../../services/rooms';
 })
 export class HeaderComponent implements OnInit {
     isOpen = false;
-    favorites: any = [{id: 1}];
+    favorites: any = [];
+    preparedFavorites: any = [];
     allItems: any = [];
+    preparedFavorites$: Observable<any>;
 
     constructor(private roomsService: RoomsService) {
     }
 
+
     ngOnInit(): void {
         this.getRooms();
         this.getFavorites();
+        this.preparedFavorites$ = this.d(this.favorites);
     }
 
     showOrders(): void {
         console.log('order');
+    }
+
+    d(data: any): Observable<any> {
+        return of(data);
     }
 
     getFavorites(): void {
@@ -29,7 +38,14 @@ export class HeaderComponent implements OnInit {
         if (!favorites) {
             this.favorites = [];
         } else {
-            const arrayFavorites = JSON.parse(favorites);
+            this.favorites = JSON.parse(favorites);
+            this.allItems.map((item) => {
+                this.favorites.map((el) => {
+                    if (item.id === el.id) {
+                        this.preparedFavorites.push(item);
+                    }
+                });
+            });
         }
     }
 
@@ -37,16 +53,29 @@ export class HeaderComponent implements OnInit {
         this.roomsService.getRooms(ROOMS)
             .subscribe(res => {
                 this.allItems = res;
-                console.log(this.allItems);
-                // this.favorites.map((el: any) => {
-                //     console.log(el);
-                // });
-
             });
     }
 
     showFavorites(): void {
         this.isOpen = !this.isOpen;
-        console.log('favorits');
+    }
+
+    removeFromFavorites(id: number): void {
+        this.favorites = this.favorites.filter((item) => {
+                return item.id !== id;
+            }
+        );
+        this.preparedFavorites$ = new Observable<any>(obs => {
+            obs.next(this.favorites);
+        });
+        this.preparedFavorites = [];
+        this.allItems.map((item) => {
+            this.favorites.map((el) => {
+                if (item.id === el.id) {
+                    this.preparedFavorites.push(item);
+                }
+            });
+        });
+        localStorage.setItem('favorites', JSON.stringify(this.favorites));
     }
 }

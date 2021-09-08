@@ -19,9 +19,26 @@
         [cdkConnectedOverlayOpen]="isOpen"
         [cdkConnectedOverlayOrigin]="trigger"
         cdkConnectedOverlay>
-    <mat-list *ngFor="let item of favorites" class="favorites__list" role="list">
-        <mat-list-item role="listitem">
-            <a [routerLink]="['detail', item.id]">{{item.id}}</a>
-        </mat-list-item>
-    </mat-list>
+    <div class="favorites__wrap">
+        <mat-list *ngFor="let item of preparedFavorites" class="favorites__list" role="list">
+            <mat-list-item role="listitem">
+                <div class="favorites__list-item__wrap">
+                    <div>
+                        <a [routerLink]="['detail', item.id]"
+                           class="favorites__list-item__link">{{item.name}}</a>
+                    </div>
+
+                    <button (click)="removeFromFavorites(item.id)" class="favorites__list-item__button" color="warn"
+                            mat-icon-button
+                            matTooltip="Убрать из избранного">
+                        <span class="material-icons">delete_outline</span>
+                    </button>
+                </div>
+
+            </mat-list-item>
+        </mat-list>
+        <mat-divider></mat-divider>
+
+    </div>
+
 </ng-template>
