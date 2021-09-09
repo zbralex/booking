@@ -1,0 +1,39 @@
+.favorites {
+  &__wrap {
+    display: block;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 3px rgb(113 113 113 / 60%);
+    margin-top: 10px;
+  }
+
+  &__list {
+    &-item__link {
+      text-decoration: none;
+      color: #323232;
+      flex-basis: 75%;
+    }
+
+    &-item__button {
+      flex-basis: 10%;
+    }
+
+    &-item__wrap {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  &__empty {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 300px;
+    height: 200px;
+    padding: 10px;
+  }
+}

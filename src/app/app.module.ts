@@ -29,6 +29,7 @@ import { CustomCalendarHeaderComponent } from './pages/room/components/custom-ca
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { FavoritesComponent } from './components/header/components/favorites/favorites.component';
 
 registerLocaleData(localeRu);
 const mapConfig: YaConfig = {
@@ -52,7 +53,8 @@ const mapConfig: YaConfig = {
     BookItComponent,
     ReviewComponent,
     ReviewDetailComponent,
-    CustomCalendarHeaderComponent
+    CustomCalendarHeaderComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
