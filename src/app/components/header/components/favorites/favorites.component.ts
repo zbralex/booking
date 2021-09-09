@@ -64,9 +64,22 @@ export class FavoritesComponent implements OnInit {
                 return item.id !== id;
             }
         );
+        this.prepareData();
+        localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    }
+
+    subscribeOnChangesFavorites(): void {
+        this.favoritesService.evEmit.subscribe((res) => {
+            this.favorites.push(res);
+            this.prepareData();
+        });
+    }
+
+    prepareData(): void {
         this.favorites$ = new Observable<any>(obs => {
             obs.next(this.favorites);
         });
+
         this.preparedFavorites = [];
         this.allItems.map((item) => {
             this.favorites.map((el) => {
@@ -75,25 +88,5 @@ export class FavoritesComponent implements OnInit {
                 }
             });
         });
-        localStorage.setItem('favorites', JSON.stringify(this.favorites));
     }
-
-    subscribeOnChangesFavorites(): void {
-        this.favoritesService.evEmit.subscribe((res) => {
-            this.favorites.push(res);
-            this.favorites$ = new Observable<any>(obs => {
-                obs.next(this.favorites);
-            });
-
-            this.preparedFavorites = [];
-            this.allItems.map((item) => {
-                this.favorites.map((el) => {
-                    if (item.id === el.id) {
-                        this.preparedFavorites.push(item);
-                    }
-                });
-            });
-        });
-    }
-
 }
