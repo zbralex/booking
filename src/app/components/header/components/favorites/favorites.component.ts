@@ -64,6 +64,7 @@ export class FavoritesComponent implements OnInit {
                 return item.id !== id;
             }
         );
+        this.favoritesService.unsetFavorite({id});
         this.prepareData();
         localStorage.setItem('favorites', JSON.stringify(this.favorites));
     }
@@ -83,10 +84,12 @@ export class FavoritesComponent implements OnInit {
         this.preparedFavorites = [];
         this.allItems.map((item) => {
             this.favorites.map((el) => {
+                console.log(item.id === el.id, el.id, item.id);
                 if (item.id === el.id) {
                     this.preparedFavorites.push(item);
                 }
             });
         });
+        // console.log(this.preparedFavorites, '[]');
     }
 }
