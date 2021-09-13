@@ -16,7 +16,8 @@ export class FavoritesComponent implements OnInit {
     favorites: any = []; // список избранного из Localstorage
     favorites$: Observable<any>; // поток для элементов избранного, который отслеживает изменения удаленных элем-ов
 
-    constructor(private roomsService: RoomsService, private favoritesService: FavoritesService) {
+    constructor(private roomsService: RoomsService,
+                private favoritesService: FavoritesService) {
     }
 
 
@@ -71,7 +72,13 @@ export class FavoritesComponent implements OnInit {
 
     subscribeOnChangesFavorites(): void {
         this.favoritesService.evEmit.subscribe((res) => {
-            this.favorites.push(res);
+            const containedItem = this.favorites.find((item) => item.id === res.id);
+            console.log(containedItem, 'containedItem');
+
+            if (!containedItem) {
+                this.favorites.push(res);
+            }
+            console.log(this.favorites, res, 'subscribeOnChangesFavorites');
             this.prepareData();
         });
     }
@@ -84,7 +91,7 @@ export class FavoritesComponent implements OnInit {
         this.preparedFavorites = [];
         this.allItems.map((item) => {
             this.favorites.map((el) => {
-                console.log(item.id === el.id, el.id, item.id);
+                // console.log(item.id === el.id, el.id, item.id);
                 if (item.id === el.id) {
                     this.preparedFavorites.push(item);
                 }
