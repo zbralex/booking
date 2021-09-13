@@ -54,27 +54,23 @@ export class RoomDetailComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked(): void {
-        this.disableButtonFavorites();
+        this.disableButtonFavorites(this.disable);
     }
 
-    disableButtonFavorites(): void {
-        if (!this.favorites) {
-            this.disableButton$.next(true);
-        } else {
-            const arrayFavorites = JSON.parse(this.favorites);
-            const findAdded = arrayFavorites.find((item) => item.id === +this.route.snapshot.params.id);
-
-            if (findAdded) {
-                this.disableButton$.next(true);
-            }
-        }
+    disableButtonFavorites(disable?: boolean): void {
+        this.disableButton$.next(disable);
     }
 
     ngOnInit(): void {
-        this.disableButtonFavorites();
         this.getDatesFromUrl();
         this.subscribeOnFavorites();
-        this.getFavorites().subscribe();
+        this.getFavorites().subscribe(res => {
+            res.forEach((item) => {
+                if (item.id === +this.route.snapshot.params.id) {
+                    this.disable = true;
+                }
+            });
+        });
     }
 
 
@@ -86,7 +82,7 @@ export class RoomDetailComponent implements OnInit, AfterContentChecked {
             this.subj.next(this.favoritesTest);
             localStorage.setItem('favorites', JSON.stringify(this.favoritesTest));
             this.setFavoriteSubj.subscribe((res) => {
-                this.disableButton$.next(true);
+                this.disable = true;
                 this.favoritesService.setFavorite(res);
             });
             this.setFavoriteSubj.next({id: +this.route.snapshot.params.id});
@@ -122,7 +118,10 @@ export class RoomDetailComponent implements OnInit, AfterContentChecked {
         // подписываемся на события из сервиса, который передает элементы из room-detail в компонент favorites
         this.favoritesService.unsetEmit.subscribe(res => {
             this.removeFromFavorites(res.id);
-            this.disableButton$.next(false);
+            if (res) {
+                this.disable = false;
+            }
+
         });
 
     }
